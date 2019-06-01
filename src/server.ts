@@ -1,11 +1,13 @@
-import express, { Application, Request, Response } from "express";
+import app from "./app";
 
-import { PORT } from "./config";
+const server = app.listen(app.get("port"), () => {
+    console.log(
+      "  App is running at http://localhost:%d in %s mode",
+      app.get("port"),
+      app.get("env")
+    );
+    console.log("  Press CTRL-C to stop\n");
+  }
+);
 
-const app: Application = express();
-
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello world");
-});
-
-app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
+export default server;

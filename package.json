@@ -13,6 +13,7 @@
     "lint": "tslint -c tslint.json -p tsconfig.json"
   },
   "dependencies": {
+    "ejs": "^2.6.1",
     "express": "^4.17.1"
   },
   "devDependencies": {
