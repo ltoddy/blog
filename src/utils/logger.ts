@@ -10,7 +10,7 @@ export default function loggerFactory(filename: string): Logger {
   return createLogger({
     transports: [
       new (transports.Console)({ level: process.env.NODE_ENV === "production" ? "error" : "debug" }),
-      new (transports.File)({ filename: "blog.log", level: "debug" })
+      new (transports.File)({ filename: `logs/blog.log`, level: "debug" })
     ],
     format: combine(
       timestamp(),
