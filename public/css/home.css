@@ -1,0 +1,78 @@
+.container {
+}
+
+.page {
+  background-color: yellow;
+}
+
+.sidebar {
+  width: 260px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #1d1d1d;
+  padding: 45px 30px;
+  height: calc(100% - 90px);
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.logo > img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid yellow;
+}
+
+.username {
+  line-height: 1.2%;
+  color: #fff;
+  text-align: center;
+}
+
+.description {
+  display: inline-block;
+  color: #666;
+  letter-spacing: 2px;
+  margin: 15px 0;
+}
+
+.links {
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.divider {
+  border: 1px solid #333;
+}
+
+.links > li > a {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.links > li > a:hover {
+  color: #bbb;
+}
+
+.email {
+  color: #aaa;
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+}
+
+.main {
+  margin-left: 320px;
+}
+
+.navigator {
+}
+
+.content {
+}
