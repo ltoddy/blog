@@ -16,7 +16,9 @@ const logger = loggerFactory("app.ts");
 const app = express();
 const MongoStore = mongo(session);
 
-mongoose.connect(MONGODB_URI)
+mongoose.connect(MONGODB_URI, {
+  poolSize: 25,
+})
   .then(() => logger.info("ready connect mongodb."))
   .catch(err => {
     logger.error("MongoDB connection error. Please make sure MongoDB is running. " + err);

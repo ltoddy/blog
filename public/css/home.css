@@ -2,7 +2,6 @@
 }
 
 .page {
-  background-color: yellow;
 }
 
 .sidebar {
@@ -62,17 +61,24 @@
 
 .email {
   color: #aaa;
-  position: absolute;
-  bottom: 20px;
-  right: 30px;
 }
 
+/*------------------------------------*/
+
 .main {
-  margin-left: 320px;
+  margin-right: 320px;
+  background-image: url("../images/email-pattern.png");
+  background-repeat: repeat;
 }
 
 .navigator {
 }
 
+.title {
+}
+
 .content {
+}
+
+.posts {
 }

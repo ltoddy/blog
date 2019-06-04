@@ -6,7 +6,7 @@ export const userSchema = new mongoose.Schema({
   passwordHash: String,
 
   name: String,
-  aboutMe: String,
+  bio: String,
 });
 
 const User = mongoose.model("User", userSchema);
