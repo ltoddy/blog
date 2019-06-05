@@ -5,6 +5,8 @@ import compression from "compression"; // compresses requests
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import session from "express-session";
+import formidable from "express-formidable";
+import flash from "express-flash";
 import mongo from "connect-mongo";
 
 import { MONGODB_URI, PORT, SECRET } from "./config";
@@ -33,6 +35,8 @@ app.set("view engine", "ejs");
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(flash());
+app.use(formidable());
 app.use(session({
   resave: true,
   saveUninitialized: true,
