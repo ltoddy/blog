@@ -9,6 +9,7 @@ import mongo from "connect-mongo";
 
 import { MONGODB_URI, PORT, SECRET } from "./config";
 import homeController from "./controllers/home";
+import authController from "./controllers/auth";
 import apiController from "./controllers/api";
 import loggerFactory from "./utils/logger";
 
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, "../public"), { maxAge: 31557600000 
 
 // Controllers (route handlers)
 app.use("/", homeController);
+app.use("/auth", authController);
 app.use("/api", apiController);
 
 export default app;
