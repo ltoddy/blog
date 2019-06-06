@@ -15,6 +15,7 @@ import authController from "./controllers/auth";
 import postsController from "./controllers/posts";
 import commentsController from "./controllers/comments";
 import apiController from "./controllers/api";
+import { recordAllRequest } from "./middlewares/record";
 import loggerFactory from "./utils/logger";
 
 const logger = loggerFactory("app.ts");
@@ -34,6 +35,7 @@ app.set("port", PORT);
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "ejs");
 
+app.use(recordAllRequest);
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,6 +50,7 @@ app.use(session({
     autoReconnect: true,
   }),
 }));
+
 app.use(express.static(path.join(__dirname, "../public"), { maxAge: 31557600000 }));
 
 // Controllers (route handlers)
@@ -56,5 +59,6 @@ app.use("/auth", authController);
 app.use("/posts", postsController);
 app.use("/comments", commentsController);
 app.use("/api", apiController);
+
 
 export default app;
