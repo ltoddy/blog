@@ -5,7 +5,7 @@ export const postSchema = new mongoose.Schema({
     type: String,
     index: true,
   },
-  body: String,
+  body: String, // raw markdown content
   comments: [{
     body: String, date: {
       type: Date,

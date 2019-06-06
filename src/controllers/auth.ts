@@ -2,20 +2,21 @@ import { join } from "path";
 import crypto from "crypto";
 
 import { Request, Response, Router } from "express";
-import loggerFactory from "../utils/logger";
 
+import loggerFactory from "../utils/logger";
 import User from "../models/User";
+import { signinRequire, signoutRequire } from "../middlewares/authenticate";
 import { SECRET } from "../config";
 
 const logger = loggerFactory("auth.ts");
 // url prefix: "/auth"
 const auth = Router();
 
-auth.get("/signup", (req: Request, res: Response) => {
+auth.get("/signup", signoutRequire, (req: Request, res: Response) => {
   res.render("auth/signup");
 });
 
-auth.post("/signup", (req: Request, res: Response) => {
+auth.post("/signup", signoutRequire, (req: Request, res: Response) => {
   const { email, username, password, password2 } = req.fields;
   try {
     if (!email) {
@@ -47,15 +48,18 @@ auth.post("/signup", (req: Request, res: Response) => {
   }
 });
 
-auth.get("/signin", (req: Request, res: Response) => {
+auth.get("/signin", signoutRequire, (req: Request, res: Response) => {
+  // TODO
   res.send("登录");
 });
 
-auth.post("/signin", (req: Request, res: Response) => {
+auth.post("/signin", signoutRequire, (req: Request, res: Response) => {
+  // TODO
   res.redirect(join(req.baseUrl, "signin"));
 });
 
-auth.post("/signout", (req: Request, res: Response) => {
+auth.post("/signout", signinRequire, (req: Request, res: Response) => {
+  // TODO
   // 登出成功
   res.redirect(join(req.baseUrl, "signin"));
 });
