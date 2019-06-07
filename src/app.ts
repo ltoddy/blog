@@ -50,6 +50,10 @@ app.use(session({
     autoReconnect: true,
   }),
 }));
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.locals.user = req.session.user;
+  next();
+});
 
 app.use(express.static(path.join(__dirname, "../public"), { maxAge: 31557600000 }));
 
