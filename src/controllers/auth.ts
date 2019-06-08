@@ -4,7 +4,8 @@ import crypto from "crypto";
 import { Request, Response, Router } from "express";
 
 import loggerFactory from "../utils/logger";
-import User from "../models/User";
+import Validator from "../utils/validate";
+import User, { IUser } from "../models/User";
 import { signinRequire, signoutRequire } from "../middlewares/authenticate";
 import { SECRET } from "../config";
 
@@ -18,34 +19,59 @@ auth.get("/signup", signoutRequire, (req: Request, res: Response) => {
 
 auth.post("/signup", signoutRequire, (req: Request, res: Response) => {
   const { email, username, password, password2 } = req.fields;
-  try {
-    if (!email) {
-      req.flash("error", "邮箱不能为空!");
-      res.redirect(join(req.baseUrl, "signup"));
-    }
-    if (!username) {
-      req.flash("error", "用户名不能为空!");
-      res.redirect(join(req.baseUrl, "signup"));
-    }
-    if (!password && !password2 && password !== password2) {
-      req.flash("error", "两次密码要求一致并且不能为空!");
-      res.redirect(join(req.baseUrl, "signup"));
-    }
+  const validator = new Validator();
+  console.log("====>", { email, username, password, password2 });
 
-    const passwordHash = crypto.createHmac("sha256", SECRET).update(<string>password).digest("hex");
-    User.create({ email, username, passwordHash }, function (err: Error) {
-      if (err) {
-        throw new Error(`create user(${username}) error.`);
-      }
-      logger.info(`${username} registered.`);
-    });
-
-    res.statusCode = 201; // TODO: consider this status code, 201 is right for create user, but there have to redirect.
-    res.redirect("/");
-  } catch (err) {
-    logger.error(err.message);
-    res.redirect(join(req.baseUrl, "signup"));
+  // 这很 Golang (函数返回两个值)，不过在这里这种设计我个人认为是比较正确，优雅的。
+  // 这里加花括号，是新创建作用域，防止变量名字冲突
+  { // 检查邮箱
+    const [ok, message]: [boolean, string] = validator.email(<string>email).result();
+    console.log("11111 >", ok);
+    if (!ok) {
+      logger.error("error", message);
+      req.flash("error", message);
+      return res.redirect(join(req.baseUrl, "signup"));
+    }
   }
+
+  { // 检查用户名
+    const [ok, message]: [boolean, string] = validator.username(<string>username).result();
+    console.log("22222 >", ok, message);
+    if (!ok) {
+      logger.error("error", message);
+      req.flash("error", message);
+      return res.redirect(join(req.baseUrl, "signup"));
+    }
+  }
+
+  { // 检查密码
+    const [ok, message]: [boolean, string] = validator.password(<string>password, <string>password2).result();
+    console.log("33333 >", ok);
+    if (!ok) {
+      logger.error("error", message);
+      req.flash("error", message);
+      return res.redirect(join(req.baseUrl, "signup"));
+    }
+  }
+
+  const passwordHash = crypto.createHmac("sha256", SECRET).update(<string>password).digest("hex");
+  User.create({ email, username, passwordHash }, function (err: Error, user: IUser) {
+    if (err) {
+      // 目前，在mongo的schema中定义了unique，这里使用字段的unique来判断是否有已经注册的同名用户，这种实现方式目前先待定。
+      logger.error(`create user(${username}) failed. ${err.message}`);
+      if (err.message.match("dup key")) {
+        req.flash("error", "该账号已被注册");
+      } else {
+        req.flash("error", "创建用户失败，请重试.");
+      }
+      return res.redirect(join(req.baseUrl, "signup"));
+    } else {
+      logger.info(`${username} registered success.`);
+      req.session.user = user;
+      req.flash("info", "注册成功");
+      return res.redirect("/");
+    }
+  });
 });
 
 auth.get("/signin", signoutRequire, (req: Request, res: Response) => {
