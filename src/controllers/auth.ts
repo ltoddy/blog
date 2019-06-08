@@ -2,6 +2,7 @@ import { join } from "path";
 import crypto from "crypto";
 
 import { Request, Response, Router } from "express";
+import { MongoError } from "mongodb";
 
 import loggerFactory from "../utils/logger";
 import Validator from "../utils/validate";
@@ -14,19 +15,17 @@ const logger = loggerFactory("auth.ts");
 const auth = Router();
 
 auth.get("/signup", signoutRequire, (req: Request, res: Response) => {
-  res.render("auth/signup");
+  return res.render("auth/signup");
 });
 
 auth.post("/signup", signoutRequire, (req: Request, res: Response) => {
   const { email, username, password, password2 } = req.fields;
   const validator = new Validator();
-  console.log("====>", { email, username, password, password2 });
 
   // 这很 Golang (函数返回两个值)，不过在这里这种设计我个人认为是比较正确，优雅的。
   // 这里加花括号，是新创建作用域，防止变量名字冲突
   { // 检查邮箱
     const [ok, message]: [boolean, string] = validator.email(<string>email).result();
-    console.log("11111 >", ok);
     if (!ok) {
       logger.error("error", message);
       req.flash("error", message);
@@ -36,7 +35,6 @@ auth.post("/signup", signoutRequire, (req: Request, res: Response) => {
 
   { // 检查用户名
     const [ok, message]: [boolean, string] = validator.username(<string>username).result();
-    console.log("22222 >", ok, message);
     if (!ok) {
       logger.error("error", message);
       req.flash("error", message);
@@ -46,7 +44,6 @@ auth.post("/signup", signoutRequire, (req: Request, res: Response) => {
 
   { // 检查密码
     const [ok, message]: [boolean, string] = validator.password(<string>password, <string>password2).result();
-    console.log("33333 >", ok);
     if (!ok) {
       logger.error("error", message);
       req.flash("error", message);
@@ -55,7 +52,7 @@ auth.post("/signup", signoutRequire, (req: Request, res: Response) => {
   }
 
   const passwordHash = crypto.createHmac("sha256", SECRET).update(<string>password).digest("hex");
-  User.create({ email, username, passwordHash }, function (err: Error, user: IUser) {
+  User.create({ email, username, passwordHash }, function (err: MongoError, user: IUser) {
     if (err) {
       // 目前，在mongo的schema中定义了unique，这里使用字段的unique来判断是否有已经注册的同名用户，这种实现方式目前先待定。
       logger.error(`create user(${username}) failed. ${err.message}`);
@@ -75,13 +72,47 @@ auth.post("/signup", signoutRequire, (req: Request, res: Response) => {
 });
 
 auth.get("/signin", signoutRequire, (req: Request, res: Response) => {
-  // TODO
-  res.send("登录");
+  return res.render("auth/signin");
 });
 
+
 auth.post("/signin", signoutRequire, (req: Request, res: Response) => {
-  // TODO
-  res.redirect(join(req.baseUrl, "signin"));
+  const { username, password } = req.fields;
+  const validator = new Validator();
+
+  { // 检查用户名
+    const [ok, message]: [boolean, string] = validator.username(<string>username).result();
+    if (!ok) {
+      logger.error("error", message);
+      req.flash("error", message);
+      return res.redirect(join(req.baseUrl, "signin"));
+    }
+  }
+
+  { // 检查密码
+    const [ok, message]: [boolean, string] = validator.password(<string>password, <string>password).result();
+    if (!ok) {
+      logger.error("error", message);
+      req.flash("error", message);
+      return res.redirect(join(req.baseUrl, "signin"));
+    }
+  }
+
+  const passwordHash = crypto.createHmac("sha256", SECRET).update(<string>password).digest("hex");
+  User.findOne({ username }, (err: MongoError, user: IUser) => {
+    if (err) {
+      return res.redirect(join(req.baseUrl, "signin"));
+    }
+    if (passwordHash !== user.passwordHash) {
+      req.flash("error", "密码不正确");
+      return res.redirect(join(req.baseUrl, "signin"));
+    }
+    req.flash("info", "登录成功");
+    req.session.user = user;
+    return res.redirect("/");
+  });
+
+  // return res.redirect(join(req.baseUrl, "signin"));
 });
 
 auth.get("/signout", signinRequire, (req: Request, res: Response) => {
