@@ -84,10 +84,10 @@ auth.post("/signin", signoutRequire, (req: Request, res: Response) => {
   res.redirect(join(req.baseUrl, "signin"));
 });
 
-auth.post("/signout", signinRequire, (req: Request, res: Response) => {
-  // TODO
-  // 登出成功
-  res.redirect(join(req.baseUrl, "signin"));
+auth.get("/signout", signinRequire, (req: Request, res: Response) => {
+  req.session.user = undefined;
+  req.flash("info", "登出成功");
+  return res.redirect(join(req.baseUrl, "signin"));
 });
 
 export default auth;
