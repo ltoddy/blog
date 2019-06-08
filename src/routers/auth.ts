@@ -111,8 +111,6 @@ auth.post("/signin", signoutRequire, (req: Request, res: Response) => {
     req.session.user = user;
     return res.redirect("/");
   });
-
-  // return res.redirect(join(req.baseUrl, "signin"));
 });
 
 auth.get("/signout", signinRequire, (req: Request, res: Response) => {
