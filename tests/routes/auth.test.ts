@@ -1,4 +1,4 @@
-import request from "supertest";
+import request = require("supertest");
 
 import app from "../../src/app";
 
