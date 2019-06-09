@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 export interface IUser {
+  _id: mongoose.Types.ObjectId;
   email: String;
   username: String;
   passwordHash: String;

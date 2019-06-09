@@ -23,6 +23,7 @@ export default class Validator {
     this.mode = "";
   }
 
+  // for auth router
   public email(email: string): Validator {
     this.data = email;
     this.mode = "email";
@@ -41,6 +42,19 @@ export default class Validator {
     return this;
   }
 
+  // for posts router
+  public title(title: string): Validator {
+    this.data = title;
+    this.mode = "title";
+    return this;
+  }
+
+  public body(body: string): Validator {
+    this.data = body;
+    this.mode = "body";
+    return this;
+  }
+
   public result(): [boolean, string] {
     switch (this.mode) {
       case "email":
@@ -55,6 +69,12 @@ export default class Validator {
         const [password, password2] = this.data.split("\n");
         if (!password || !password2) return [false, "密码不能为空"];
         if (password !== password2) return [false, "两次密码不一致"];
+        return [true, ""];
+      case "title":
+        if (!this.data) return [false, "标题不能为空"];
+        return [true, ""];
+      case "body":
+        if (!this.data) return [false, "内容不能为空"];
         return [true, ""];
       default:
         return [true, ""];
