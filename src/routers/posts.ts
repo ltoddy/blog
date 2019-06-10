@@ -75,9 +75,50 @@ posts.get("/:id", (req: Request, res: Response) => {
   });
 });
 
-posts.put("/update/:postId", (req: Request, res: Response) => {
-  const { postId } = req.params;
-  res.send(postId);
+posts.get("/update/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+  Post.findById(id, (err: MongoError, post: IPost) => {
+    if (err) {
+      logger.error(`can't find (${id}) post`);
+      req.flash("error", "未找到文章");
+      return res.redirect(join(req.baseUrl));
+    } else {
+      return res.render("posts/edit", { post });
+    }
+  });
+});
+
+posts.post("/update/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { title, body } = req.fields;
+  const validator = new Validator();
+
+  { // 检查标题
+    const [ok, message] = validator.title(<string>title).result();
+    if (!ok) {
+      req.flash("error", message);
+      return res.redirect(join(req.baseUrl, "create"));
+    }
+  }
+
+  { // 检查内容
+    const [ok, message] = validator.body(<string>body).result();
+    if (!ok) {
+      req.flash("error", message);
+      return res.redirect(join(req.baseUrl, "create"));
+    }
+  }
+
+  const htmlBody = md.render(<string>body);
+  Post.findOneAndUpdate({ _id: id }, { title, body, htmlBody }, (err: MongoError, post: IPost) => {
+    if (err) {
+      logger.error(`update post (${id}) failed`);
+      req.flash("error", "更新文章失败");
+      return res.redirect(join(req.baseUrl, "update", id));
+    } else {
+      return res.redirect(join(req.baseUrl, id));
+    }
+  });
 });
 
 posts.delete("/delete/:postId", (req: Request, res: Response) => {
