@@ -27,7 +27,6 @@ auth.post("/signup", signoutRequire, (req: Request, res: Response) => {
   { // 检查邮箱
     const [ok, message]: [boolean, string] = validator.email(<string>email).result();
     if (!ok) {
-      logger.error("error", message);
       req.flash("error", message);
       return res.redirect(join(req.baseUrl, "signup"));
     }
@@ -36,7 +35,6 @@ auth.post("/signup", signoutRequire, (req: Request, res: Response) => {
   { // 检查用户名
     const [ok, message]: [boolean, string] = validator.username(<string>username).result();
     if (!ok) {
-      logger.error("error", message);
       req.flash("error", message);
       return res.redirect(join(req.baseUrl, "signup"));
     }
@@ -45,7 +43,6 @@ auth.post("/signup", signoutRequire, (req: Request, res: Response) => {
   { // 检查密码
     const [ok, message]: [boolean, string] = validator.password(<string>password, <string>password2).result();
     if (!ok) {
-      logger.error("error", message);
       req.flash("error", message);
       return res.redirect(join(req.baseUrl, "signup"));
     }
