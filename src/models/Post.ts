@@ -1,17 +1,18 @@
-import mongoose from "mongoose";
+import { Document, model, Model, Schema, Types } from "mongoose";
 
-export interface IPost {
-  _id: mongoose.Types.ObjectId;
-  author: mongoose.Types.ObjectId;
+export interface IPost extends Document {
+  id: Types.ObjectId;
+  author: Types.ObjectId;
   title: string;
   body: string;
+  htmlBody: string;
   data?: Date;
   views?: number;
 }
 
-const Post = mongoose.model("Post", new mongoose.Schema({
+const PostSchema: Schema = new Schema({
   author: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
   },
   title: {
@@ -24,6 +25,10 @@ const Post = mongoose.model("Post", new mongoose.Schema({
     type: String, // raw markdown content
     required: String,
   },
+  htmlBody: {
+    type: String,
+    required: String,
+  },
   date: {
     type: Date,
     default: Date.now
@@ -33,6 +38,8 @@ const Post = mongoose.model("Post", new mongoose.Schema({
     required: true,
     default: 0,
   },
-}));
+});
+
+const Post: Model<IPost> = model<IPost>("Post", PostSchema);
 
 export default Post;
