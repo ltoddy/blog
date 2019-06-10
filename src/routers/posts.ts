@@ -121,9 +121,33 @@ posts.post("/update/:id", (req: Request, res: Response) => {
   });
 });
 
-posts.delete("/delete/:postId", (req: Request, res: Response) => {
-  const { postId } = req.params;
-  res.send(postId);
+posts.get("/delete/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  Post.findById(id, (err: MongoError, post: IPost) => {
+    if (err) {
+      logger.error(`can't find (${id}) post`);
+      req.flash("error", "未找到文章");
+      return res.redirect(join(req.baseUrl, "delete", id));
+    } else {
+      return res.render("posts/delete", { post });
+    }
+  });
+});
+
+posts.post("/delete/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  Post.deleteOne({ _id: id }, (err: MongoError) => {
+    if (err) {
+      logger.error(`delete (${id}) failed`);
+      req.flash("error", "删除失败");
+      return res.redirect(join(req.baseUrl, "delete", id));
+    } else {
+      req.flash("info", "删除成功");
+      return res.redirect(req.baseUrl);
+    }
+  });
 });
 
 export default posts;
