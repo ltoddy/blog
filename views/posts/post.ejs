@@ -11,13 +11,9 @@
 <div class="container">
     <div class="">
         <div class="">
-            <% posts.forEach(function (post) { %>
-                <div style="border: 1px solid black;">
-                    <div><a href="/posts/<%= post.id %>"><%= post.title %></a></div>
-                    <div><%= post.body %></div>
-                    <div><%- post.htmlBody %></div>
-                </div>
-            <% }) %>
+            <div><%= post.title %></div>
+            <div><%= post.body %></div>
+            <div><%- post.htmlBody %></div>
         </div>
     </div>
 </div>

@@ -62,9 +62,17 @@ posts.post("/create", signinRequire, (req: Request, res: Response) => {
   });
 });
 
-posts.get("/:postId", (req: Request, res: Response) => {
-  const { postId } = req.params;
-  res.send(postId);
+posts.get("/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+  Post.findById(id, (err: MongoError, post: IPost) => {
+    if (err) {
+      logger.error(`can't find (${id}) post`);
+      req.flash("error", "未找到文章");
+      return res.redirect(join(req.baseUrl));
+    } else {
+      return res.render("posts/post", { post });
+    }
+  });
 });
 
 posts.put("/update/:postId", (req: Request, res: Response) => {
