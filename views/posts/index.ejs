@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link type="favicon" rel="shortcut icon" href="favicon.ico"/>
+    <title>blog - posts</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/posts.css">
+</head>
+<body>
+<div class="container">
+    <div class="">
+        <div class="">
+            <% posts.forEach(function (post) { %>
+                <div style="border: 1px solid black;">
+                    <div><%= post.title %></div>
+                    <div><%= post.body %></div>
+                    <div><%- post.htmlBody %></div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</div>
+</body>
+</html>

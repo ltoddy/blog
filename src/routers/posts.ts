@@ -15,7 +15,9 @@ const logger = loggerFactory("posts.ts");
 const posts = Router();
 
 posts.get("/", (req: Request, res: Response) => {
-  res.send("全部posts");
+  Post.find((err: MongoError, posts: IPost[]) => {
+    return res.render("posts/index", { posts });
+  });
 });
 
 posts.get("/create", signinRequire, (req: Request, res: Response) => {
@@ -23,7 +25,6 @@ posts.get("/create", signinRequire, (req: Request, res: Response) => {
 });
 
 posts.post("/create", signinRequire, (req: Request, res: Response) => {
-  const author = req.session.user._id;
   const { title, body } = req.fields;
   const validator = new Validator();
 
@@ -44,7 +45,7 @@ posts.post("/create", signinRequire, (req: Request, res: Response) => {
   }
 
   const htmlBody = md.render(<string>body);
-  Post.create({ author, title, body, htmlBody }, (err: MongoError, post: IPost) => {
+  Post.create({ title, body, htmlBody }, (err: MongoError, post: IPost) => {
     if (err) {
       logger.error(`create post(${title}) failed. ${err.message}`);
       if (err.message.match("dup key")) {

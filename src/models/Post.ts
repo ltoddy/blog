@@ -2,7 +2,6 @@ import { Document, model, Model, Schema, Types } from "mongoose";
 
 export interface IPost extends Document {
   id: Types.ObjectId;
-  author: Types.ObjectId;
   title: string;
   body: string;
   htmlBody: string;
@@ -11,10 +10,6 @@ export interface IPost extends Document {
 }
 
 const PostSchema: Schema = new Schema({
-  author: {
-    type: Schema.Types.ObjectId,
-    required: true,
-  },
   title: {
     type: String,
     index: true,
