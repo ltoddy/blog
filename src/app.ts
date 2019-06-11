@@ -1,6 +1,6 @@
 import path from "path";
 
-import express, { Request, Response, NextFunction } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import compression from "compression"; // compresses requests
 import mongoose from "mongoose";
 import bodyParser from "body-parser";

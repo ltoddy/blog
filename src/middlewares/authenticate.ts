@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 
 function signinRequire(req: Request, res: Response, next: NextFunction) {
   // 要求登入状态
