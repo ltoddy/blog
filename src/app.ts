@@ -15,6 +15,7 @@ import authRouter from "./routers/auth";
 import postsRouter from "./routers/posts";
 import commentsRouter from "./routers/comments";
 import apiRouter from "./routers/api";
+import pageNotFound from "./errors/404";
 // import { recordAllRequest } from "./middlewares/record";
 import loggerFactory from "./utils/logger";
 
@@ -64,5 +65,6 @@ app.use("/posts", postsRouter);
 app.use("/comments", commentsRouter);
 app.use("/api", apiRouter);
 
+app.use(pageNotFound);
 
 export default app;
