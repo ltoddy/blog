@@ -1,6 +1,6 @@
 import path from "path";
 
-import express, { NextFunction, Request, Response } from "express";
+import express, { NextFunction, Request, Response, ErrorRequestHandler } from "express";
 import compression from "compression"; // compresses requests
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
@@ -64,6 +64,13 @@ app.use("/auth", authRouter);
 app.use("/posts", postsRouter);
 app.use("/comments", commentsRouter);
 app.use("/api", apiRouter);
+
+// ErrorRequestHandler
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  logger.error(err);
+  req.flash("error", err.message);
+  return res.redirect("/");
+});
 
 app.use(pageNotFound);
 
