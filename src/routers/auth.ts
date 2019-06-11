@@ -18,12 +18,10 @@ auth.get("/signup", signoutRequire, (req: Request, res: Response) => {
   return res.render("auth/signup");
 });
 
-auth.post("/signup", signoutRequire, (req: Request, res: Response) => {
+auth.post("/signup", signoutRequire, async (req: Request, res: Response) => {
   const { email, username, password, password2 } = req.fields;
   const validator = new Validator();
 
-  // 这很 Golang (函数返回两个值)，不过在这里这种设计我个人认为是比较正确，优雅的。
-  // 这里加花括号，是新创建作用域，防止变量名字冲突
   { // 检查邮箱
     const [ok, message]: [boolean, string] = validator.email(<string>email).result();
     if (!ok) {
@@ -49,29 +47,26 @@ auth.post("/signup", signoutRequire, (req: Request, res: Response) => {
   }
 
   const passwordHash = crypto.createHmac("sha256", SECRET).update(<string>password).digest("hex");
-  User.create({ email, username, passwordHash }, function (err: MongoError, user: IUser) {
-    if (err) {
-      // 目前，在mongo的schema中定义了unique，这里使用字段的unique来判断是否有已经注册的同名用户，这种实现方式目前先待定。
-      logger.error(`create user(${username}) failed. ${err.message}`);
-      if (err.message.match("dup key")) {
-        req.flash("error", "该账号已被注册");
-      } else {
-        req.flash("error", "创建用户失败，请重试.");
-      }
-      return res.redirect(join(req.baseUrl, "signup"));
-    } else {
-      logger.info(`${username} registered success.`);
-      req.session.user = user;
-      req.flash("info", "注册成功");
-      return res.redirect("/");
-    }
-  });
+  try {
+    const user: IUser = await User.create({ email, username, passwordHash });
+    logger.info(`${username} registered success.`);
+    req.flash("info", "注册成功");
+    return res.redirect(join(req.baseUrl, "signin"));
+  } catch (err) {
+    // 目前，在mongo的schema中定义了unique，这里使用字段的unique来判断是否有已经注册的同名用户，这种实现方式目前先待定。
+    logger.error(`create user(${username}) failed. ${err.message}`);
+    if (err.message.match("dup key")) req.flash("error", "该账号已被注册");
+    else req.flash("error", "创建用户失败，请重试.");
+
+    return res.redirect(join(req.baseUrl, "signup"));
+  }
 });
+
+// ---------------------------------------------------------------------------------------------------------------------
 
 auth.get("/signin", signoutRequire, (req: Request, res: Response) => {
   return res.render("auth/signin");
 });
-
 
 auth.post("/signin", signoutRequire, (req: Request, res: Response) => {
   const { username, password } = req.fields;
@@ -97,9 +92,8 @@ auth.post("/signin", signoutRequire, (req: Request, res: Response) => {
 
   const passwordHash = crypto.createHmac("sha256", SECRET).update(<string>password).digest("hex");
   User.findOne({ username }, (err: MongoError, user: IUser) => {
-    if (err) {
-      return res.redirect(join(req.baseUrl, "signin"));
-    }
+    if (err) return res.redirect(join(req.baseUrl, "signin"));
+
     if (passwordHash !== user.passwordHash) {
       req.flash("error", "密码不正确");
       return res.redirect(join(req.baseUrl, "signin"));
@@ -109,6 +103,8 @@ auth.post("/signin", signoutRequire, (req: Request, res: Response) => {
     return res.redirect("/");
   });
 });
+
+// ---------------------------------------------------------------------------------------------------------------------
 
 auth.get("/signout", signinRequire, (req: Request, res: Response) => {
   req.session.user = undefined;
