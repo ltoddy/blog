@@ -3,32 +3,6 @@
   background-repeat: repeat;
 }
 
-.navigator {
-  position: fixed;
-  left: 30px;
-  top: 30px;
-}
-
-.nav {
-  text-align: center;
-  padding: 10px;
-  height: 100%;
-  width: 100%;
-  border-radius: 5px;
-}
-
-.info {
-  background-color: mediumspringgreen;
-}
-
-.error {
-  background-color: orangered;
-}
-
-.close:hover {
-  cursor: pointer;
-}
-
 .center {
   height: 100vh;
   display: flex;
