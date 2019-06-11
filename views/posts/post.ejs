@@ -15,6 +15,23 @@
             <div><%= post.body %></div>
             <div><%- post.htmlBody %></div>
         </div>
+
+        <div>
+            <form action="/comments/" method="post" enctype="multipart/form-data">
+                <input type="hidden" id="postId" name="postId" value="<%= post._id %>">
+                <label for="body">留言</label>
+                <textarea name="body" id="body" cols="30" rows="10"></textarea>
+                <input type="submit" value="提交">
+            </form>
+        </div>
+
+        <div>
+            <% comments.forEach(function (comment) { %>
+                <div><%- comment.author %></div>
+                <div><%- comment.body %></div>
+                <div><%- comment.htmlBody %></div>
+            <% }) %>
+        </div>
     </div>
 </div>
 </body>

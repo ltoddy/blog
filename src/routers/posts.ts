@@ -2,13 +2,15 @@ import { join } from "path";
 
 import { Request, Response, Router } from "express";
 import { MongoError } from "mongodb";
+import MarkdownIt from "markdown-it";
 
 import loggerFactory from "../utils/logger";
 import Validator from "../utils/validate";
 import { signinRequire } from "../middlewares/authenticate";
 import Post, { IPost } from "../models/Post";
-import MarkdownIt from "markdown-it";
+import Comment, { IComment } from "../models/Comment";
 
+// 目前转成markdown都是在controller层做的,以后改成在model层通过mongo的中间件做
 const md = new MarkdownIt();
 const logger = loggerFactory("posts.ts");
 // url prefix: "/posts"
@@ -55,7 +57,6 @@ posts.post("/create", signinRequire, (req: Request, res: Response) => {
       }
       return res.redirect(join(req.baseUrl, "create"));
     } else {
-      logger.info(`${title} 发布新文章成功`);
       req.flash("info", "发布新文章成功");
       return res.redirect(join(req.baseUrl));
     }
@@ -64,13 +65,17 @@ posts.post("/create", signinRequire, (req: Request, res: Response) => {
 
 posts.get("/:id", (req: Request, res: Response) => {
   const { id } = req.params;
+  // Post.findOneAndUpdate()  use this api
   Post.findById(id, (err: MongoError, post: IPost) => {
     if (err) {
       logger.error(`can't find (${id}) post`);
       req.flash("error", "未找到文章");
       return res.redirect(join(req.baseUrl));
     } else {
-      return res.render("posts/post", { post });
+      Comment.find({ postId: id }, (err: MongoError, comments: IComment[]) => {
+        console.log("============>", comments);
+        return res.render("posts/post", { post, comments });
+      });
     }
   });
 });

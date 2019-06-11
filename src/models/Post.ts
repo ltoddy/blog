@@ -9,7 +9,7 @@ export interface IPost extends Document {
   views?: number;
 }
 
-const PostSchema: Schema = new Schema({
+const PostSchema: Schema<IPost> = new Schema<IPost>({
   title: {
     type: String,
     index: true,
@@ -18,11 +18,11 @@ const PostSchema: Schema = new Schema({
   },
   body: {
     type: String, // raw markdown content
-    required: String,
+    required: true,
   },
   htmlBody: {
     type: String,
-    required: String,
+    required: true,
   },
   date: {
     type: Date,

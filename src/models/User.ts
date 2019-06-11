@@ -8,7 +8,7 @@ export interface IUser extends Document {
   bio: String;
 }
 
-const UserSchema = new Schema({
+const UserSchema: Schema<IUser> = new Schema<IUser>({
   email: {
     type: String,
     required: true,
