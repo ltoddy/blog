@@ -6,8 +6,7 @@ export const SECRET = process.env.SECRET || "guess a string";
 // mongo volume: /my/own/datadir:/data/db
 export const MONGO_HOST = process.env.MONGO_HOST || "localhost";
 export const MONGO_PORT = process.env.MONGO_PORT || "27017";
-// export const MONGO_USER = process.env.MONGO_USER || "admin";
-// export const MONGO_PASSWORD = process.env.MONGO_PASSWORD || "hello";
+export const MONGO_USER = process.env.MONGO_USER || "admin";
+export const MONGO_PASSWORD = process.env.MONGO_PASSWORD || "hello";
 export const MONGO_DATABASE = process.env.MONGO_DATABASE || "blog";
-// export const MONGODB_URI = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`;
-export const MONGODB_URI = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`;
+export const MONGODB_URI = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`;

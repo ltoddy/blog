@@ -1,0 +1,74 @@
+.container {
+  background-image: url("/images/email-pattern.png");
+  background-repeat: repeat;
+}
+
+.navigator {
+  position: fixed;
+  left: 30px;
+  top: 30px;
+}
+
+.nav {
+  text-align: center;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.info {
+  background-color: mediumspringgreen;
+}
+
+.error {
+  background-color: orangered;
+}
+
+.close:hover {
+  cursor: pointer;
+}
+
+.center {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  padding: 100px;
+  background-color: #fff;
+}
+
+.field {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.field > label {
+
+}
+
+.field > input {
+  margin-left: 10px;
+}
+
+.submit {
+  border-radius: 30px;
+}
+
+.btn {
+  width: 120px;
+  height: 30px;
+  border: 0;
+  border-radius: 30px;
+  background-color: lightgreen;
+  margin: 0 auto !important;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: limegreen;
+}

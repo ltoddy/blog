@@ -3,15 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <link type="favicon" rel="shortcut icon" href="favicon.ico"/>
-    <title>blog - signup</title>
+    <title>注册</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/auth.css">
 </head>
 <body>
 <div class="container">
-    <div class="">
-        <div class="">
-            <form method="post" action="" enctype="multipart/form-data">
+    <% if (messages) { %>
+        <div class="navigator">
+            <% if (messages.info) { %>
+                <div class="nav info">
+                    <span><%= messages.info %></span>
+                    <span id="close" class="close">&times;</span>
+                </div>
+            <% } %>
+
+            <% if (messages.error) { %>
+                <div class="nav error">
+                    <span><%= messages.error %></span>
+                    <span id="close" class="close">&times;</span>
+                </div>
+            <% } %>
+        </div>
+    <% } %>
+
+    <div class="center">
+        <div class="content">
+            <form class="form" method="post" action="" enctype="multipart/form-data">
                 <div class="field">
                     <label for="email">邮箱</label>
                     <input id="email" type="text" name="email">
@@ -29,12 +47,27 @@
                     <input id="password2" type="password" name="password2">
                 </div>
 
-                <div>
-                    <input type="submit" value="注册">
+                <div class="field submit">
+                    <input class="btn" type="submit" value="注册">
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+  window.onload = function () {
+    const closeBtn = document.getElementById("close");
+
+    closeBtn.onclick = function (event) {
+      event.preventDefault();
+      const navs = document.getElementsByClassName("nav")
+
+      for (let i = 0; i < navs.length; i++) {
+        navs[i].style.display = "none";
+      }
+    };
+  }
+</script>
 </body>
 </html>
