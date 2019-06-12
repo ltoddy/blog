@@ -10,11 +10,11 @@ import flash from "express-flash";
 import mongo from "connect-mongo";
 
 import { MONGODB_URI, PORT, SECRET } from "./config";
-import homeRouter from "./routers/home";
-import authRouter from "./routers/auth";
-import postsRouter from "./routers/posts";
-import commentsRouter from "./routers/comments";
-import apiRouter from "./routers/api";
+import homeRouter from "./router/home";
+import authRouter from "./router/auth";
+import postsRouter from "./router/posts";
+import commentsRouter from "./router/comments";
+import apiRouter from "./router/api";
 import pageNotFound from "./errors/404";
 import loggerFactory from "./utils/logger";
 
