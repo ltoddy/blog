@@ -2,28 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link type="favicon" rel="shortcut icon" href="favicon.ico"/>
-    <title>blog - posts</title>
+    <link type="favicon" rel="shortcut icon" href="/favicon.ico"/>
+    <title>发表文章</title>
     <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/_flash.css">
     <link rel="stylesheet" href="/css/posts.css">
 </head>
 <body>
 <div class="container">
-    <div class="">
-        <div class="">
-            <form method="post" action="" enctype="multipart/form-data">
-                <div class="field">
-                    <label for="title">标题</label>
-                    <input id="title" type="text" name="title">
-                </div>
-                <div class="field">
-                    <label for="body">内容</label>
-                    <textarea name="body" id="body" cols="30" rows="10"></textarea>
-                </div>
-                <div><input type="submit" value="提交"></div>
-            </form>
-        </div>
+    <%- include("../components/_flash") %>
+
+    <div class="body">
+        <form class="form" method="post" action="" enctype="multipart/form-data">
+            <div class="field">
+                <label for="title">标题</label>
+                <input class="title" id="title" type="text" name="title">
+            </div>
+            <div class="field">
+                <label for="body">内容</label>
+                <textarea class="content" name="body" id="body" cols="60" rows="25" placeholder="支持markdown"></textarea>
+            </div>
+            <div class="field">
+                <input class="btn" type="submit" value="提交">
+            </div>
+        </form>
     </div>
 </div>
+
+<script src="/js/_flash.js"></script>
 </body>
 </html>

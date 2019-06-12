@@ -16,7 +16,6 @@ import postsRouter from "./routers/posts";
 import commentsRouter from "./routers/comments";
 import apiRouter from "./routers/api";
 import pageNotFound from "./errors/404";
-import { recordAllRequest } from "./middlewares/record";
 import loggerFactory from "./utils/logger";
 
 const logger = loggerFactory("app.ts");
@@ -36,7 +35,6 @@ app.set("port", PORT);
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "ejs");
 
-app.use(recordAllRequest);
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

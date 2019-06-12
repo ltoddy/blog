@@ -1,0 +1,64 @@
+.container {
+  background-image: url("/images/email-pattern.png");
+  background-repeat: repeat;
+}
+
+.body {
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  margin: 100px 0;
+}
+
+.field {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  margin: 10px 0;
+}
+
+.field > label {
+
+}
+
+.field > input {
+  margin-left: 10px;
+}
+
+.field > textarea {
+  margin-left: 10px;
+}
+
+
+.submit {
+  border-radius: 30px;
+}
+
+.title {
+  padding: 5px 15px;
+  height: 30px;
+  border: 0;
+  border-radius: 5px;
+}
+
+.content {
+  border: 0;
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+
+.btn {
+  width: 120px;
+  height: 30px;
+  border: 0;
+  border-radius: 30px;
+  background-color: lightgreen;
+  margin: 0 auto !important;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: limegreen;
+}
