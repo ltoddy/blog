@@ -80,7 +80,7 @@ posts.get("/:id", (req: Request, res: Response) => {
   });
 });
 
-posts.get("/update/:id", (req: Request, res: Response) => {
+posts.get("/edit/:id", (req: Request, res: Response) => {
   const { id } = req.params;
   Post.findById(id, (err: MongoError, post: IPost) => {
     if (err) {
@@ -93,7 +93,7 @@ posts.get("/update/:id", (req: Request, res: Response) => {
   });
 });
 
-posts.post("/update/:id", (req: Request, res: Response) => {
+posts.post("/edit/:id", (req: Request, res: Response) => {
   const { id } = req.params;
   const { title, body } = req.fields;
   const validator = new Validator();
@@ -102,7 +102,7 @@ posts.post("/update/:id", (req: Request, res: Response) => {
     const [ok, message] = validator.title(<string>title).result();
     if (!ok) {
       req.flash("error", message);
-      return res.redirect(join(req.baseUrl, "create"));
+      return res.redirect(join(req.baseUrl, "edit", id));
     }
   }
 
@@ -110,7 +110,7 @@ posts.post("/update/:id", (req: Request, res: Response) => {
     const [ok, message] = validator.body(<string>body).result();
     if (!ok) {
       req.flash("error", message);
-      return res.redirect(join(req.baseUrl, "create"));
+      return res.redirect(join(req.baseUrl, "edit", id));
     }
   }
 
