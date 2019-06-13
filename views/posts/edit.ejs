@@ -16,11 +16,11 @@
         <form class="form" action="" method="post" enctype="multipart/form-data">
             <div class="field">
                 <label for="title">标题</label>
-                <input class="title" id="title" type="text" name="title" value="<%= post.title %>">
+                <input required class="title" id="title" type="text" name="title" value="<%= post.title %>">
             </div>
             <div class="field">
                 <label for="body">内容</label>
-                <textarea class="content" name="body" id="body" cols="60" rows="25"><%= post.body %></textarea>
+                <textarea required class="content" name="body" id="body" cols="60" rows="25"><%= post.body %></textarea>
             </div>
             <div class="field">
                 <input class="btn" type="submit" value="更新">

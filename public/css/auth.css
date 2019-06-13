@@ -27,6 +27,7 @@
 
 .field > input {
   margin-left: 10px;
+  border: 0;
 }
 
 .submit {
