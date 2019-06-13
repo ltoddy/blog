@@ -5,6 +5,7 @@ export interface IComment extends Document {
   body: string;
   htmlBody: string;
   postId: Types.ObjectId;
+  timestamp: Date;
 }
 
 const CommentSchema: Schema = new Schema<IComment>({
@@ -24,6 +25,10 @@ const CommentSchema: Schema = new Schema<IComment>({
     type: Schema.Types.ObjectId,
     required: true,
   },
+  timestamp: {
+    type: Schema.Types.Date,
+    default: Date.now()
+  }
 });
 
 const Comment: Model<IComment> = model<IComment>("Comment", CommentSchema);
