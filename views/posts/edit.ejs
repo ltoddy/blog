@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link type="favicon" rel="shortcut icon" href="/favicon.ico"/>
-    <title>blog - posts</title>
-    <link rel="stylesheet" href="/css/global.css">
-    <link rel="stylesheet" href="/css/_flash.css">
-    <link rel="stylesheet" href="/css/posts.css">
+  <meta charset="UTF-8">
+  <link type="favicon" rel="shortcut icon" href="/favicon.ico"/>
+  <title>blog - posts</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/_flash.css">
+  <link rel="stylesheet" href="/css/posts.css">
 </head>
 <body>
 <div class="container">
-    <%- include("../components/_flash") %>
+  <%- include("../components/_flash") %>
 
-    <div class="body">
-        <form class="form" action="" method="post" enctype="multipart/form-data">
-            <div class="field">
-                <label for="title">标题</label>
-                <input required class="title" id="title" type="text" name="title" value="<%= post.title %>">
-            </div>
-            <div class="field">
-                <label for="body">内容</label>
-                <textarea required class="content" name="body" id="body" cols="60" rows="25"><%= post.body %></textarea>
-            </div>
-            <div class="field">
-                <input class="btn" type="submit" value="更新">
-            </div>
-        </form>
-    </div>
+  <div class="body">
+    <form class="form" action="" method="post" enctype="multipart/form-data">
+      <div class="field">
+        <label for="title">标题</label>
+        <input required class="title" id="title" type="text" name="title" value="<%= post.title %>">
+      </div>
+      <div class="field">
+        <label for="body">内容</label>
+        <textarea required class="content" name="body" id="body" cols="60" rows="25"><%= post.body %></textarea>
+      </div>
+      <div class="field">
+        <input class="btn" type="submit" value="更新">
+      </div>
+    </form>
+  </div>
 </div>
 
 <script src="/js/_flash.js"></script>

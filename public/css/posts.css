@@ -79,7 +79,7 @@
 }
 
 .comments {
-  margin: 50px 0 0 0 ;
+  margin: 50px 0 0 0;
 }
 
 .comment {
@@ -90,4 +90,9 @@
   border-radius: 5px;
   padding: 10px;
   border-color: lightgoldenrodyellow;
+}
+.post-preview {
+  margin: 30px 0;
+  max-height: 300px;
+  overflow: hidden;
 }

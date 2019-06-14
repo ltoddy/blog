@@ -1,47 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link type="favicon" rel="shortcut icon" href="/favicon.ico"/>
-    <title><%= post.title %></title>
-    <link rel="stylesheet" href="/css/global.css">
-    <link rel="stylesheet" href="/css/_flash.css">
-    <link rel="stylesheet" href="/css/posts.css">
+  <meta charset="UTF-8">
+  <link type="favicon" rel="shortcut icon" href="/favicon.ico"/>
+  <title><%= post.title %></title>
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/_flash.css">
+  <link rel="stylesheet" href="/css/posts.css">
 </head>
 <body>
 <div class="container">
-    <%- include("../components/_flash") %>
+  <%- include("../components/_flash") %>
 
-    <div class="post-content">
-        <div class="post-title"><%= post.title %></div>
-        <div class="post-body"><%- post.htmlBody %></div>
+  <div class="post-content">
+    <div class="post-title"><%= post.title %></div>
+    <div class="post-body"><%- post.htmlBody %></div>
 
-        <div>
-            <form class="form" action="/comments/" method="post" enctype="multipart/form-data">
-                <input type="hidden" id="postId" name="postId" value="<%= post._id %>">
+    <div>
+      <form class="form" action="/comments/" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="postId" name="postId" value="<%= post._id %>">
 
-                <div class="field">
-                    <label for="body">留言</label>
-                    <textarea class="body" name="body" id="body" placeholder="支持markdown" required cols="60"
-                              rows="10"></textarea>
-                </div>
-
-                <div class="field">
-                    <input class="btn" type="submit" value="提交">
-                </div>
-            </form>
+        <div class="field">
+          <label for="body">留言</label>
+          <textarea class="body" name="body" id="body" placeholder="支持markdown" required cols="60"
+                    rows="10"></textarea>
         </div>
 
-        <div class="comments">
-            <div>留言区</div>
-            <% comments.forEach(function (comment) { %>
-                <div class="comment">
-                    <div class="comment-title"><%- comment.author %></div>
-                    <div class="comment-body"><%- comment.htmlBody %></div>
-                </div>
-            <% }) %>
+        <div class="field">
+          <input class="btn" type="submit" value="提交">
         </div>
+      </form>
     </div>
+
+    <div class="comments">
+      <div>留言区</div>
+      <% comments.forEach(function (comment) { %>
+        <div class="comment">
+          <div class="comment-title"><%- comment.author %></div>
+          <div class="comment-body"><%- comment.htmlBody %></div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
 </div>
 
 <script src="/js/_flash.js"></script>
