@@ -73,7 +73,6 @@ posts.get("/:id", (req: Request, res: Response) => {
       return res.redirect(join(req.baseUrl));
     } else {
       Comment.find({ postId: id }, (err: MongoError, comments: IComment[]) => {
-        console.log("============>", comments);
         return res.render("posts/post", { post, comments });
       });
     }
