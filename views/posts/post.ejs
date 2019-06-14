@@ -3,44 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <link type="favicon" rel="shortcut icon" href="/favicon.ico"/>
-  <title><%= post.title %></title>
+  <title>ltoddy | <%= post.title %></title>
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/_flash.css">
   <link rel="stylesheet" href="/css/posts.css">
 </head>
 <body>
-<div class="container">
-  <%- include("../components/_flash") %>
+<%- include("../components/_flash") %>
 
-  <div class="post-content">
-    <div class="post-title"><%= post.title %></div>
-    <div class="post-body"><%- post.htmlBody %></div>
+<div class="post-page">
+  <div class="page-container">
 
-    <div>
-      <form class="form" action="/comments/" method="post" enctype="multipart/form-data">
+    <div class="post-container">
+      <div class="post-title"><%= post.title %></div>
+      <div class="post-meta">
+        <span class="post-timestamp"><%- post.timestamp %></span>
+        <span class="post-views">阅读 <%- post.views %></span>
+      </div>
+
+      <div class="post-divider"></div>
+      <div class="post-html-body"><%- post.htmlBody %></div>
+    </div>
+
+    <div class="comment-form-container">
+      <h2 class="reply-title">发表评论</h2>
+      <form class="comment-form" action="/comments/" method="post" enctype="multipart/form-data">
         <input type="hidden" id="postId" name="postId" value="<%= post._id %>">
 
-        <div class="field">
-          <label for="body">留言</label>
-          <textarea class="body" name="body" id="body" placeholder="支持markdown" required cols="60"
-                    rows="10"></textarea>
+        <div>
+          <label for="author">姓名 *</label>
+          <input id="author" name="author" type="text" size="30" maxlength="255" required>
         </div>
 
-        <div class="field">
-          <input class="btn" type="submit" value="提交">
+        <div>
+          <label for="email">邮箱 *</label>
+          <input id="email" name="email" type="text" size="30" maxlength="255" required>
+        </div>
+
+        <div>
+          <label for="body">评论</label>
+          <textarea name="body" id="body" required cols="45" rows="8" maxlength="65525"></textarea>
+        </div>
+        <div>
+          <input id="submit" name="submit" type="submit" value="发表评论">
         </div>
       </form>
     </div>
 
-    <div class="comments">
-      <div>留言区</div>
-      <% comments.forEach(function (comment) { %>
-        <div class="comment">
-          <div class="comment-title"><%- comment.author %></div>
-          <div class="comment-body"><%- comment.htmlBody %></div>
-        </div>
-      <% }) %>
+    <div id="comments" class="comments-container">
+      <h2>评论列表</h2>
+
+      <ol class="comments">
+        <% comments.forEach(function (comment) { %>
+          <li class="comment">
+            <div class="comment-meta">
+              <div>
+                <img src="https://avatars2.githubusercontent.com/u/20920763?s=460&v=4" alt="头像">
+              </div>
+              <span>
+                <div class="comment-author"><%- comment.author %></div>
+                <div class="comment-timestamp"><%- comment.timestamp %></div>
+              </span>
+            </div>
+            <div class="comment-body"><%- comment.htmlBody %></div>
+          </li>
+        <% }) %>
+      </ol>
     </div>
+
   </div>
 </div>
 

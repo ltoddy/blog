@@ -1,12 +1,13 @@
 import { Document, model, Model, Schema, Types } from "mongoose";
+import moment from "moment";
 
 export interface IPost extends Document {
   id: Types.ObjectId;
   title: string;
   body: string;
   htmlBody: string;
-  data?: Date;
-  views?: number;
+  timestamp: Date;
+  views: number;
 }
 
 const PostSchema: Schema<IPost> = new Schema<IPost>({
@@ -24,9 +25,9 @@ const PostSchema: Schema<IPost> = new Schema<IPost>({
     type: String,
     required: true,
   },
-  date: {
+  timestamp: {
     type: Date,
-    default: Date.now
+    default: () => moment().format("LLLL")
   },
   views: {
     type: Number,

@@ -4,6 +4,8 @@ export interface IComment extends Document {
   id: Types.ObjectId;
   body: string;
   htmlBody: string;
+  author: string;
+  email: string;
   postId: Types.ObjectId;
   timestamp: Date;
 }
@@ -18,7 +20,11 @@ const CommentSchema: Schema = new Schema<IComment>({
     required: true,
   },
   author: {
-    type: Schema.Types.ObjectId,
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
     required: true,
   },
   postId: {
