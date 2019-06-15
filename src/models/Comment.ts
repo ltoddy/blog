@@ -1,4 +1,5 @@
 import { Document, model, Model, Schema, Types } from "mongoose";
+import moment from "moment";
 
 export interface IComment extends Document {
   id: Types.ObjectId;
@@ -8,7 +9,7 @@ export interface IComment extends Document {
   email: string;
   gravatar: string;
   postId: Types.ObjectId;
-  timestamp: Date;
+  timestamp: string;
 }
 
 const CommentSchema: Schema = new Schema<IComment>({
@@ -37,8 +38,8 @@ const CommentSchema: Schema = new Schema<IComment>({
     required: true,
   },
   timestamp: {
-    type: Schema.Types.Date,
-    default: Date.now()
+    type: String,
+    default: moment(Date.now()).format("LL")
   }
 });
 

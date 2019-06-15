@@ -5,6 +5,7 @@ interface IRegexs {
 const regexs: IRegexs = {
   email: /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/,
   username: /^[A-Za-z]+/,
+  url: /http:\/\/.+/
 };
 
 // const validator = new Validator();
@@ -56,6 +57,12 @@ export default class Validator {
     return this;
   }
 
+  public absoluteUrl(url: string): Validator {
+    this.data = url;
+    this.mode = "url";
+    return this;
+  }
+
   public result(): [boolean, string] {
     switch (this.mode) {
       case "email":
@@ -76,6 +83,9 @@ export default class Validator {
         return [true, ""];
       case "body":
         if (!this.data) return [false, "内容不能为空"];
+        return [true, ""];
+      case "url":
+        if (!regexs[this.mode].test(this.data)) return [false, "url格式不正确"];
         return [true, ""];
       default:
         return [true, ""];

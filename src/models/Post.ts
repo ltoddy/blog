@@ -7,7 +7,7 @@ export interface IPost extends Document {
   body: string;
   htmlBody: string;
   wall: string;
-  timestamp: Date;
+  timestamp: string;
   views: number;
 }
 
@@ -31,8 +31,8 @@ const PostSchema: Schema<IPost> = new Schema<IPost>({
     required: true,
   },
   timestamp: {
-    type: Date,
-    default: () => moment().format("LLLL")
+    type: String,
+    default: moment(Date.now()).format("LL")
   },
   views: {
     type: Number,

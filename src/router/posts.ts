@@ -95,7 +95,7 @@ posts.get("/edit/:id", (req: Request, res: Response) => {
 
 posts.post("/edit/:id", (req: Request, res: Response) => {
   const { id } = req.params;
-  const { title, body } = req.fields;
+  const { title, timestamp, wall, body } = req.fields;
   const validator = new Validator();
 
   { // 检查标题
@@ -114,8 +114,16 @@ posts.post("/edit/:id", (req: Request, res: Response) => {
     }
   }
 
+  { // 检查壁纸url
+    const [ok, message] = validator.absoluteUrl(<string>wall).result();
+    if (!ok) {
+      req.flash("error", message);
+      return res.redirect(join(req.baseUrl, "edit", id));
+    }
+  }
+
   const htmlBody = md.render(<string>body);
-  Post.findOneAndUpdate({ _id: id }, { title, body, htmlBody }, (err: MongoError, post: IPost) => {
+  Post.findOneAndUpdate({ _id: id }, { title, timestamp, wall, body, htmlBody }, (err: MongoError, post: IPost) => {
     if (err) {
       logger.error(`update post (${id}) failed`);
       req.flash("error", "更新文章失败");
