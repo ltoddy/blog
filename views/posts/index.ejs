@@ -6,6 +6,7 @@
   <title>全部文章</title>
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/_flash.css">
+  <link rel="stylesheet" href="/css/navigator.css">
   <link rel="stylesheet" href="/css/markdown.css">
   <style>
     .container {
@@ -77,6 +78,7 @@
       overflow-wrap: break-word;
       height: 240px;
       overflow-y: hidden;
+      overflow-x: hidden;
     }
 
     .post-preview > p:first-child {
@@ -97,6 +99,7 @@
 </head>
 <body>
 <%- include("../components/_flash") %>
+<%- include("../components/navigator") %>
 
 <div class="container">
   <% posts.forEach(function (post) { %>

@@ -18,12 +18,13 @@ const posts = Router();
 
 posts.get("/", (req: Request, res: Response) => {
   Post.find((err: MongoError, posts: IPost[]) => {
-    return res.render("posts/index", { posts });
+    return res.render("posts/index", { posts, post: undefined });
   });
 });
 
 posts.get("/create", signinRequire, (req: Request, res: Response) => {
-  return res.render("posts/create");
+  // { post: undefined } 是为了兼容 navigator.ejs，不然报错
+  return res.render("posts/create", { post: undefined });
 });
 
 posts.post("/create", signinRequire, (req: Request, res: Response) => {

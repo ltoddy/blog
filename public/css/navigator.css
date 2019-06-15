@@ -6,6 +6,9 @@
   position: fixed;
   top: 0;
   z-index: 10;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .navigator-loader {
@@ -17,19 +20,36 @@
   background-image: -webkit-linear-gradient(left, #F16F5C 0%, #F16F5C 12.5%, #5B56DD 12.5%, #5B56DD 25%, #E15CED 25%, #E15CED 37.5%, #27E559 37.5%, #27E559 50%, #18C8C9 50%, #18C8C9 62.5%, #DC8987 62.5%, #DC8987 75%, #BB83D6 75%, #BB83D6 87.5%, #E774BD 87.5%, #E774BD 100%);
 }
 
-.navigator-icon {
-  position: absolute;
-}
-
-.navigator-icon > img {
-  width: 50px;
+.navigator-left {
+  text-align: left;
+  margin-top: 15px;
 }
 
 .navigator-subtitle {
   display: none;
   text-align: center;
+  position: relative;
   color: #666;
   font-size: 14px;
   margin-top: 16px;
   animation-duration: 5s;
+}
+
+.navigator-right {
+  text-align: right;
+  margin-top: 15px;
+}
+
+.navigator-left, .navigator-right {
+  width: 300px;
+  text-overflow: ellipsis;
+}
+
+.navigator-left a, .navigator-right a {
+  color: #666;
+  margin-right: 10px;
+}
+
+.navigator-left a:hover, .navigator-right a:hover {
+  color: #999;
 }
