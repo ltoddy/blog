@@ -3,6 +3,11 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/7s0giiex0yx6p03t?svg=true)](https://ci.appveyor.com/project/ltoddy/blog)
 [![CircleCI](https://circleci.com/gh/ltoddy/blog.svg?style=svg)](https://circleci.com/gh/ltoddy/blog)
 
+小清新风格的blog
+
+
+
+
 关于环境变量，具体看`src/config.ts`文件。
 
 **前提：**
@@ -19,6 +24,7 @@
 - [ ] 更新flash设计
 - [ ] 首页设计
 - [ ] 后端部分异常处理
+- [ ] 移动端样式适配
 - [ ] 删除某一篇文章时，对应的留言也删掉
 - [ ] controller层部分逻辑移动到model层
 - [ ] 分页
