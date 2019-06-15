@@ -1,8 +1,9 @@
 const navigatorSubtitle = document.getElementById("navigator-subtitle");
 const navigatorLoader = document.getElementById("navigator-loader");
+const post = document.getElementById("post");
 
 window.onscroll = function () {
-  const totalHeight = document.body.scrollHeight - window.screen.availHeight;
+  const totalHeight = post.scrollHeight;
   const distance = document.documentElement.scrollTop || document.body.scrollTop;
 
   if (distance > 100) {

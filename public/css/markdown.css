@@ -2,14 +2,43 @@
   text-align: left;
 }
 
-.markdown pre, code {
-  font-size: 12px;
-  line-height: 1.45;
+.markdown h1, h2, h3, h4, h5, h6 {
+  margin: 5px 0;
+  color: #333;
+}
+
+.markdown p {
+  display: inline-block;
+  margin: 4px 0;
+  font-size: 14px;
+  line-height: 2;
+  color: #333;
+}
+
+.markdown p::before {
+  content: "\00A0\00A0\00A0\00A0";
+}
+
+.markdown ul {
+  margin-left: 15px;
+  list-style: lower-greek;
+}
+
+.markdown p > code {
+  background-color: rgba(246, 248, 250, 0.8);
+  border-radius: 3px;
+  padding: 1px 3px;
 }
 
 .markdown pre {
+  font-size: 12px;
+  line-height: 1.45;
   background-color: #f6f8fa;
   overflow: auto;
   padding: 16px;
   border-radius: 3px;
+}
+
+.markdown a {
+  color: #999;
 }

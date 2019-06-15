@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/_flash.css">
   <link rel="stylesheet" href="/css/navigator.css">
+  <link rel="stylesheet" href="/css/footer.css">
   <link rel="stylesheet" href="/css/markdown.css">
   <link rel="stylesheet" href="/css/posts.css">
 </head>
@@ -17,7 +18,7 @@
 <div class="post-page">
   <div class="page-container">
 
-    <div class="post-container">
+    <div id="post" class="post-container">
       <div class="post-title"><%= post.title %></div>
       <div class="post-meta">
         <span class="post-timestamp"><%- post.timestamp %></span>
@@ -25,7 +26,9 @@
       </div>
 
       <div class="post-divider"></div>
-      <div class="post-html-body markdown"><%- post.htmlBody %></div>
+      <div id="markdown" class="post-html-body markdown">
+        <%- post.htmlBody %>
+      </div>
     </div>
 
     <div class="comment-form-container">
@@ -40,13 +43,14 @@
 
         <div>
           <label for="email">邮箱 *</label>
-          <input id="email" name="email" type="text" size="30" maxlength="255" required>
+          <input id="email" name="email" type="text" size="30" maxlength="255" required placeholder="为了使用gavatar的头像服务">
         </div>
 
         <div>
           <label for="body">评论</label>
-          <textarea name="body" id="body" required cols="45" rows="8" maxlength="65525"></textarea>
+          <textarea name="body" id="body" required cols="45" rows="8" maxlength="65525" placeholder="支持markdown语法"></textarea>
         </div>
+
         <div>
           <input id="submit" name="submit" type="submit" value="发表评论">
         </div>
@@ -76,6 +80,7 @@
 
   </div>
 </div>
+<%- include("../components/footer") %>
 
 <script src="/js/_flash.js"></script>
 <script src="/js/navigator.js"></script>
