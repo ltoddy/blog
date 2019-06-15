@@ -6,6 +6,7 @@ export interface IComment extends Document {
   htmlBody: string;
   author: string;
   email: string;
+  gravatar: string;
   postId: Types.ObjectId;
   timestamp: Date;
 }
@@ -24,6 +25,10 @@ const CommentSchema: Schema = new Schema<IComment>({
     required: true,
   },
   email: {
+    type: String,
+    required: true,
+  },
+  gravatar: { // gravatar uri
     type: String,
     required: true,
   },
