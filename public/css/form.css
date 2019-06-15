@@ -1,0 +1,50 @@
+.primary-form {
+  width: 700px;
+}
+
+.primary-form label {
+  display: block;
+  font-size: 14px;
+  color: #444;
+  margin: 10px 0 5px;
+}
+
+.primary-form textarea {
+  display: block;
+  vertical-align: top;
+  border: 1px solid #e2e2e2;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  font-size: 14px;
+}
+
+.primary-form input {
+  display: block;
+  vertical-align: top;
+  border: 1px solid #e2e2e2;
+  padding: 10px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: none;
+  font-size: 14px;
+}
+
+.primary-form input[type="submit"] {
+  cursor: pointer;
+  letter-spacing: 5px;
+  border: 1px solid #dadada;
+  width: 140px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  padding: 10px 0;
+  background: #fff;
+  margin: 30px auto 0;
+}
+
+.primary-form input[type="submit"]:hover {
+  background-color: lightgrey;
+}

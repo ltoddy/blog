@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/css/navigator.css">
   <link rel="stylesheet" href="/css/footer.css">
   <link rel="stylesheet" href="/css/markdown.css">
+  <link rel="stylesheet" href="/css/form.css">
   <link rel="stylesheet" href="/css/posts.css">
 </head>
 <body>
@@ -33,27 +34,19 @@
 
     <div class="comment-form-container">
       <h2 class="reply-title">发表评论</h2>
-      <form class="comment-form" action="/comments/" method="post" enctype="multipart/form-data">
+      <form class="primary-form" action="/comments/" method="post" enctype="multipart/form-data">
         <input type="hidden" id="postId" name="postId" value="<%= post._id %>">
 
-        <div>
-          <label for="author">姓名 *</label>
-          <input id="author" name="author" type="text" size="30" maxlength="255" required>
-        </div>
+        <label for="author">姓名 *</label>
+        <input id="author" name="author" type="text" size="30" maxlength="255" required>
 
-        <div>
-          <label for="email">邮箱 *</label>
-          <input id="email" name="email" type="text" size="30" maxlength="255" required placeholder="为了使用gavatar的头像服务">
-        </div>
+        <label for="email">邮箱 *</label>
+        <input id="email" name="email" type="text" size="30" maxlength="255" required placeholder="为了使用gavatar的头像服务">
 
-        <div>
-          <label for="body">评论</label>
-          <textarea name="body" id="body" required cols="45" rows="8" maxlength="65525" placeholder="支持markdown语法"></textarea>
-        </div>
+        <label for="body">评论</label>
+        <textarea name="body" id="body" required cols="45" rows="8" maxlength="65525" placeholder="支持markdown语法"></textarea>
 
-        <div>
-          <input id="submit" name="submit" type="submit" value="发表评论">
-        </div>
+        <input id="submit" name="submit" type="submit" value="发表评论">
       </form>
     </div>
 
