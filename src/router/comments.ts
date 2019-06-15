@@ -19,28 +19,13 @@ comments.post("/", (req: Request, res: Response) => {
   const { postId, author, email, body } = req.fields;
   const validator = new Validator();
 
-  { // 检查邮箱
-    const [ok, message]: [boolean, string] = validator.email(<string>email).result();
-    if (!ok) {
-      req.flash("error", message);
-      return res.redirect(req.baseUrl);
-    }
-  }
-
-  { // 检查用户名
-    const [ok, message]: [boolean, string] = validator.username(<string>author).result();
-    if (!ok) {
-      req.flash("error", message);
-      return res.redirect(req.baseUrl);
-    }
-  }
-
-  { // 检查内容
-    const [ok, message] = validator.body(<string>body).result();
-    if (!ok) {
-      req.flash("error", message);
-      return res.redirect(req.baseUrl);
-    }
+  try {
+    validator.email(<string>email).done(); // 检查邮箱
+    validator.username(<string>author).done(); // 检查用户名
+    validator.body(<string>body).done(); // 检查内容
+  } catch (e) {
+    req.flash("error", e.message);
+    return res.redirect(join(req.baseUrl, "signup"));
   }
 
   const url = "https://www.gravatar.com/avatar/";

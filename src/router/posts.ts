@@ -31,20 +31,12 @@ posts.post("/create", signinRequire, (req: Request, res: Response) => {
   const { title, body, wall } = req.fields;
   const validator = new Validator();
 
-  { // 检查标题
-    const [ok, message] = validator.title(<string>title).result();
-    if (!ok) {
-      req.flash("error", message);
-      return res.redirect(join(req.baseUrl, "create"));
-    }
-  }
-
-  { // 检查内容
-    const [ok, message] = validator.body(<string>body).result();
-    if (!ok) {
-      req.flash("error", message);
-      return res.redirect(join(req.baseUrl, "create"));
-    }
+  try {
+    validator.title(<string>title).done(); // 检查标题
+    validator.body(<string>body); // 检查内容
+  } catch (e) {
+    req.flash("error", e.message);
+    return res.redirect(join(req.baseUrl, "create"));
   }
 
   const htmlBody = md.render(<string>body);
@@ -96,30 +88,16 @@ posts.get("/edit/:id", (req: Request, res: Response) => {
 posts.post("/edit/:id", (req: Request, res: Response) => {
   const { id } = req.params;
   const { title, timestamp, wall, body } = req.fields;
+
   const validator = new Validator();
 
-  { // 检查标题
-    const [ok, message] = validator.title(<string>title).result();
-    if (!ok) {
-      req.flash("error", message);
-      return res.redirect(join(req.baseUrl, "edit", id));
-    }
-  }
-
-  { // 检查内容
-    const [ok, message] = validator.body(<string>body).result();
-    if (!ok) {
-      req.flash("error", message);
-      return res.redirect(join(req.baseUrl, "edit", id));
-    }
-  }
-
-  { // 检查壁纸url
-    const [ok, message] = validator.absoluteUrl(<string>wall).result();
-    if (!ok) {
-      req.flash("error", message);
-      return res.redirect(join(req.baseUrl, "edit", id));
-    }
+  try {
+    validator.title(<string>title).done(); // 检查标题
+    validator.body(<string>body).done(); // 检查内容
+    validator.absoluteUrl(<string>wall).done();  // 检查壁纸url
+  } catch (e) {
+    req.flash("error", e.message);
+    return res.redirect(join(req.baseUrl, "edit", id));
   }
 
   const htmlBody = md.render(<string>body);

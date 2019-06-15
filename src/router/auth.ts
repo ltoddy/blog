@@ -20,30 +20,15 @@ auth.get("/signup", signoutRequire, (req: Request, res: Response) => {
 
 auth.post("/signup", signoutRequire, async (req: Request, res: Response) => {
   const { email, username, password, password2 } = req.fields;
+
   const validator = new Validator();
-
-  { // 检查邮箱
-    const [ok, message]: [boolean, string] = validator.email(<string>email).result();
-    if (!ok) {
-      req.flash("error", message);
-      return res.redirect(join(req.baseUrl, "signup"));
-    }
-  }
-
-  { // 检查用户名
-    const [ok, message]: [boolean, string] = validator.username(<string>username).result();
-    if (!ok) {
-      req.flash("error", message);
-      return res.redirect(join(req.baseUrl, "signup"));
-    }
-  }
-
-  { // 检查密码
-    const [ok, message]: [boolean, string] = validator.password(<string>password, <string>password2).result();
-    if (!ok) {
-      req.flash("error", message);
-      return res.redirect(join(req.baseUrl, "signup"));
-    }
+  try {
+    validator.email(<string>email).done(); // 检查邮箱
+    validator.username(<string>username).done(); // 检查用户名
+    validator.password(<string>password, <string>password2).done(); // 检查密码
+  } catch (e) {
+    req.flash("error", e.message);
+    return res.redirect(join(req.baseUrl, "signup"));
   }
 
   const passwordHash = crypto.createHmac("sha256", SECRET).update(<string>password).digest("hex");
@@ -70,24 +55,14 @@ auth.get("/signin", signoutRequire, (req: Request, res: Response) => {
 
 auth.post("/signin", signoutRequire, (req: Request, res: Response) => {
   const { username, password } = req.fields;
+
   const validator = new Validator();
-
-  { // 检查用户名
-    const [ok, message]: [boolean, string] = validator.username(<string>username).result();
-    if (!ok) {
-      logger.error("error", message);
-      req.flash("error", message);
-      return res.redirect(join(req.baseUrl, "signin"));
-    }
-  }
-
-  { // 检查密码
-    const [ok, message]: [boolean, string] = validator.password(<string>password, <string>password).result();
-    if (!ok) {
-      logger.error("error", message);
-      req.flash("error", message);
-      return res.redirect(join(req.baseUrl, "signin"));
-    }
+  try {
+    validator.username(<string>username).done(); // 检查用户名
+    validator.password(<string>password, <string>password).done(); // 检查密码
+  } catch (e) {
+    req.flash("error", e.message);
+    return res.redirect(join(req.baseUrl, "signup"));
   }
 
   const passwordHash = crypto.createHmac("sha256", SECRET).update(<string>password).digest("hex");

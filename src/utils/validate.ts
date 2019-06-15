@@ -8,9 +8,6 @@ const regexs: IRegexs = {
   url: /http:\/\/.+/
 };
 
-// const validator = new Validator();
-// const [ok, message] = validator.email(email).result();
-// 这很 Golang (函数返回两个值)，不过在这里这种设计我个人认为是比较正确，优雅的。
 export default class Validator {
   private data: string;
   private mode: string;
@@ -63,6 +60,10 @@ export default class Validator {
     return this;
   }
 
+  // 过时了
+  // const validator = new Validator();
+  // const [ok, message] = validator.email(email).result();
+  // 这很 Golang (函数返回两个值)，不过在这里这种设计我个人认为是比较正确，优雅的。
   public result(): [boolean, string] {
     switch (this.mode) {
       case "email":
@@ -89,6 +90,35 @@ export default class Validator {
         return [true, ""];
       default:
         return [true, ""];
+    }
+  }
+
+  public done() {
+    switch (this.mode) {
+      case "email":
+        if (!this.data) throw(new Error("邮箱不能为空"));
+        if (!regexs[this.mode].test(this.data)) throw(new Error("邮箱格式不正确"));
+        return;
+      case "username":
+        if (!this.data) throw(new Error("用户名不能为空"));
+        if (!regexs[this.mode].test(this.data)) throw(new Error("用户名格式不正确"));
+        return;
+      case "password":
+        const [password, password2] = this.data.split("\n");
+        if (!password || !password2) throw(new Error("密码不能为空"));
+        if (password !== password2) throw(new Error("两次密码不一致"));
+        return;
+      case "title":
+        if (!this.data) throw(new Error("标题不能为空"));
+        return;
+      case "body":
+        if (!this.data) throw(new Error("内容不能为空"));
+        return;
+      case "url":
+        if (!regexs[this.mode].test(this.data)) throw(new Error("url格式不正确"));
+        return;
+      default:
+        return;
     }
   }
 }
