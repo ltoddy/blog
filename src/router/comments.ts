@@ -1,21 +1,16 @@
-import crypto from "crypto";
 import { join } from "path";
-import querystring from "querystring";
 
 import { Request, Response, Router } from "express";
-import { MongoError } from "mongodb";
-import MarkdownIt from "markdown-it";
 
 import loggerFactory from "../utils/logger";
-import Comment, { IComment } from "../models/Comment";
 import Validator from "../utils/validate";
+import Comment from "../models/Comment";
 
-const md = new MarkdownIt();
 const logger = loggerFactory("comment.ts");
 // url prefix: "/comments"
 const comments = Router();
 
-comments.post("/", (req: Request, res: Response) => {
+comments.post("/", async (req: Request, res: Response) => {
   const { postId, author, email, body } = req.fields;
   const validator = new Validator();
 
@@ -28,19 +23,14 @@ comments.post("/", (req: Request, res: Response) => {
     return res.redirect(join(req.baseUrl, "signup"));
   }
 
-  const url = "https://www.gravatar.com/avatar/";
-  const htmlBody = md.render(<string>body);
-  const gravatarHash = crypto.createHash("md5").update(<string>email).digest("hex");
-  const gravatar = `${join(url, gravatarHash)}?${querystring.stringify({ d: "identicon", s: "40", r: "g" })}`;
-  Comment.create({ postId, author, email, body, htmlBody, gravatar }, (err: MongoError, comment: IComment) => {
-    if (err) {
-      req.flash("error", "创建留言失败");
-    } else {
-      req.flash("info", "创建留言成功");
-    }
-
-    return res.redirect(`/posts/${postId}`);
-  });
+  try {
+    await Comment.new(<string>postId, <string>author, <string>email, <string>body);
+    req.flash("info", "创建留言成功");
+  } catch (e) {
+    logger.info(`create comment failed: ${e}`);
+    req.flash("error", "创建留言失败");
+  }
+  return res.redirect(`/posts/${postId}`);
 });
 
 // 待定

@@ -60,7 +60,7 @@ export default class Validator {
     return this;
   }
 
-  // 过时了
+  // 废弃
   // const validator = new Validator();
   // const [ok, message] = validator.email(email).result();
   // 这很 Golang (函数返回两个值)，不过在这里这种设计我个人认为是比较正确，优雅的。

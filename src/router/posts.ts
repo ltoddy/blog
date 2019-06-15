@@ -8,7 +8,7 @@ import loggerFactory from "../utils/logger";
 import Validator from "../utils/validate";
 import { signinRequire } from "../middlewares/authenticate";
 import Post, { IPost } from "../models/Post";
-import Comment, { IComment } from "../models/Comment";
+import Comment, { ICommentDocument } from "../models/Comment";
 
 // 目前转成markdown都是在controller层做的,以后改成在model层通过mongo的中间件做
 const md = new MarkdownIt();
@@ -65,7 +65,7 @@ posts.get("/:id", (req: Request, res: Response) => {
       req.flash("error", "未找到文章");
       return res.redirect(join(req.baseUrl));
     } else {
-      Comment.find({ postId: id }, (err: MongoError, comments: IComment[]) => {
+      Comment.find({ postId: id }, (err: MongoError, comments: ICommentDocument[]) => {
         return res.render("posts/post", { post, comments });
       });
     }

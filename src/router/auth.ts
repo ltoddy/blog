@@ -87,4 +87,11 @@ auth.get("/signout", signinRequire, (req: Request, res: Response) => {
   return res.redirect(join(req.baseUrl, "signin"));
 });
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+// TODO: 个人信息页面
+auth.get("/profile", signinRequire, (req: Request, res: Response) => {
+  return res.send("个人信息");
+});
+
 export default auth;

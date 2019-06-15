@@ -64,10 +64,10 @@ app.use("/comments", commentsRouter);
 app.use("/api", apiRouter);
 
 // ErrorRequestHandler
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, req: Request, res: Response) => {
   logger.error(err);
   req.flash("error", err.message);
-  return res.redirect("/");
+  return res.redirect("/posts");
 });
 
 app.use(pageNotFound);
