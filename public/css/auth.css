@@ -1,49 +1,8 @@
-.container {
-  background-image: url("/images/email-pattern.png");
-  background-repeat: repeat;
-}
-
-.center {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.content {
-  padding: 100px;
+.auth-page {
   background-color: #fff;
 }
 
-.field {
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 0;
-}
-
-.field > label {
-
-}
-
-.field > input {
-  margin-left: 10px;
-  border: 0;
-}
-
-.submit {
-  border-radius: 30px;
-}
-
-.btn {
-  width: 120px;
-  height: 30px;
-  border: 0;
-  border-radius: 30px;
-  background-color: lightgreen;
-  margin: 0 auto !important;
-}
-
-.btn:hover {
-  cursor: pointer;
-  background-color: limegreen;
+.auth-container {
+  max-width: 300px;
+  margin: 100px auto;
 }

@@ -6,31 +6,31 @@
   <title>登录</title>
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/_flash.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/navigator.css">
+  <link rel="stylesheet" href="/css/footer.css">
   <link rel="stylesheet" href="/css/auth.css">
 </head>
 <body>
 <%- include("../components/_flash") %>
+<%- include("../components/navigator") %>
 
-<div class="container">
-  <div class="center">
-    <div class="content">
-      <form method="post" action="" enctype="multipart/form-data">
-        <div class="field">
-          <label for="username">用户名</label>
-          <input required id="username" type="text" name="username" placeholder="4-16位">
-        </div>
-        <div class="field">
-          <label for="password">密码</label>
-          <input required id="password" type="password" name="password">
-        </div>
+<div class="auth-page">
+  <div class="auth-container">
 
-        <div class="field submit">
-          <input class="btn" type="submit" value="登录">
-        </div>
-      </form>
-    </div>
+    <form class="primary-form" method="post" action="" enctype="multipart/form-data">
+      <label for="username">用户名</label>
+      <input id="username" type="text" name="username" maxlength="255" required>
+
+      <label for="password">密码</label>
+      <input id="password" type="password" name="password" maxlength="255" required>
+
+      <input id="submit" type="submit" value="登录">
+    </form>
+
   </div>
 </div>
+<%- include("../components/footer") %>
 
 <script src="/js/_flash.js"></script>
 </body>

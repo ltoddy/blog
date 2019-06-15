@@ -6,39 +6,37 @@
   <title>注册</title>
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/_flash.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/navigator.css">
+  <link rel="stylesheet" href="/css/footer.css">
   <link rel="stylesheet" href="/css/auth.css">
 </head>
 <body>
 <%- include("../components/_flash") %>
+<%- include("../components/navigator") %>
 
-<div class="container">
-  <div class="center">
-    <div class="content">
-      <form method="post" action="" enctype="multipart/form-data">
-        <div class="field">
-          <label for="email">邮箱</label>
-          <input required id="email" type="text" name="email">
-        </div>
-        <div class="field">
-          <label for="username">用户名</label>
-          <input required id="username" type="text" name="username" placeholder="4-16位">
-        </div>
-        <div class="field">
-          <label for="password">密码</label>
-          <input required id="password" type="password" name="password">
-        </div>
-        <div class="field">
-          <label for="password2">再次密码</label>
-          <input required id="password2" type="password" name="password2">
-        </div>
+<div class="auth-page">
+  <div class="auth-container">
 
-        <div class="field submit">
-          <input class="btn" type="submit" value="注册">
-        </div>
-      </form>
-    </div>
+    <form class="primary-form" method="post" action="" enctype="multipart/form-data">
+      <label for="email">邮箱</label>
+      <input id="email" type="text" name="email" maxlength="255" required>
+
+      <label for="username">用户名</label>
+      <input id="username" type="text" name="username" maxlength="255" required>
+
+      <label for="password">密码</label>
+      <input id="password" type="password" name="password" maxlength="255" required>
+
+      <label for="password2">再次密码</label>
+      <input id="password2" type="password" name="password2" maxlength="255" required>
+
+      <input id="submit" type="submit" value="注册">
+    </form>
+
   </div>
 </div>
+<%- include("../components/footer") %>
 
 <script src="/js/_flash.js"></script>
 </body>

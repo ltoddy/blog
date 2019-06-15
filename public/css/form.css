@@ -1,5 +1,6 @@
 .primary-form {
-  width: 700px;
+  width: 100%;
+  background-color: #fff;
 }
 
 .primary-form label {
