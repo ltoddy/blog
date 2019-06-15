@@ -1,3 +1,7 @@
+import crypto from "crypto";
+import { join } from "path";
+import querystring from "querystring";
+
 import { Request, Response, Router } from "express";
 import { MongoError } from "mongodb";
 import MarkdownIt from "markdown-it";
@@ -39,8 +43,11 @@ comments.post("/", (req: Request, res: Response) => {
     }
   }
 
+  const url = "https://www.gravatar.com/avatar/";
   const htmlBody = md.render(<string>body);
-  Comment.create({ postId, author, email, body, htmlBody }, (err: MongoError, comment: IComment) => {
+  const gravatarHash = crypto.createHash("md5").update(<string>email).digest("hex");
+  const gravatar = `${join(url, gravatarHash)}?${querystring.stringify({ d: "identicon", s: "40", r: "g" })}`;
+  Comment.create({ postId, author, email, body, htmlBody, gravatar }, (err: MongoError, comment: IComment) => {
     if (err) {
       req.flash("error", "创建留言失败");
     } else {
