@@ -27,7 +27,7 @@ posts.get("/create", signinRequire, (req: Request, res: Response) => {
 });
 
 posts.post("/create", signinRequire, (req: Request, res: Response) => {
-  const { title, body } = req.fields;
+  const { title, body, wall } = req.fields;
   const validator = new Validator();
 
   { // 检查标题
@@ -47,7 +47,7 @@ posts.post("/create", signinRequire, (req: Request, res: Response) => {
   }
 
   const htmlBody = md.render(<string>body);
-  Post.create({ title, body, htmlBody }, (err: MongoError, post: IPost) => {
+  Post.create({ title, body, htmlBody, wall }, (err: MongoError, post: IPost) => {
     if (err) {
       logger.error(`create post(${title}) failed. ${err.message}`);
       if (err.message.match("dup key")) {

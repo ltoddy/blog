@@ -1,7 +1,14 @@
+.markdown {
+  text-align: left;
+}
+
+.markdown pre, code {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
 .markdown pre {
   background-color: #f6f8fa;
-  font-size: 85%;
-  line-height: 1.45;
   overflow: auto;
   padding: 16px;
   border-radius: 3px;

@@ -6,6 +6,7 @@ export interface IPost extends Document {
   title: string;
   body: string;
   htmlBody: string;
+  wall: string;
   timestamp: Date;
   views: number;
 }
@@ -22,6 +23,10 @@ const PostSchema: Schema<IPost> = new Schema<IPost>({
     required: true,
   },
   htmlBody: {
+    type: String,
+    required: true,
+  },
+  wall: { // image absolute url
     type: String,
     required: true,
   },

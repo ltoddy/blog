@@ -6,20 +6,116 @@
   <title>全部文章</title>
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/_flash.css">
-  <link rel="stylesheet" href="/css/posts.css">
+  <link rel="stylesheet" href="/css/markdown.css">
+  <style>
+    .container {
+      padding: 100px;
+      overflow: hidden;
+      min-width: 1100px;
+    }
+
+    .post-block {
+      margin: 100px auto 0;
+      width: 1200px;
+      position: relative;
+    }
+
+    .post-block:nth-child(odd) {
+      text-align: left;
+    }
+
+    .post-block:nth-child(even) {
+      text-align: right;
+    }
+
+    .post-block:before {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 200%;
+      position: absolute;
+      left: 50%;
+      background: #eaeaea;
+      top: -50%;
+      z-index: 0;
+    }
+
+    .post-block:nth-child(odd) .post-else {
+      left: 660px;
+    }
+
+    .post-block:nth-child(even) .post-else {
+      right: 660px;
+    }
+
+    .post-wall {
+      display: inline-block;
+      width: 680px;
+      height: 440px;
+      overflow: hidden;
+      position: relative;
+      z-index: 3;
+    }
+
+    .post-wall img {
+      display: block;
+      height: 440px;
+      width: 680px;
+    }
+
+    .post-else {
+      position: absolute;
+      background: #fff;
+      /*text-align: left;*/
+      top: 20px;
+      border: 1px solid #eaeaea;
+      /*left: 660px;*/
+      width: 500px;
+      height: 400px;
+    }
+
+    .post-preview {
+      margin: 80px;
+      overflow-wrap: break-word;
+      height: 240px;
+      overflow-y: hidden;
+    }
+
+    .post-preview > p:first-child {
+      color: #999;
+      font-size: 12px;
+    }
+
+    .post-preview h3 a {
+      color: #333;
+    }
+
+    .post-preview * {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <%- include("../components/_flash") %>
+<%- include("../components/_flash") %>
 
-  <div class="post-content">
-    <% posts.forEach(function (post) { %>
-      <div class="post-preview" style="border: 1px solid black;">
-        <div class="post-title"><a href="/posts/<%= post.id %>"><%= post.title %></a></div>
-        <div class="post-body"><%- post.htmlBody %></div>
+<div class="container">
+  <% posts.forEach(function (post) { %>
+    <div class="post-block">
+      <a class="post-wall" href="/posts/<%= post.id %>">
+        <img src="<%= post.wall %>" alt="wall">
+      </a>
+
+      <div class="post-else">
+        <div class="post-preview markdown">
+          <p><%- post.timestamp %></p>
+          <h3><a href="/posts/<%= post.id %>"><%- post.title %></a></h3>
+          <%- post.htmlBody %>
+        </div>
       </div>
-    <% }) %>
-  </div>
+    </div>
+  <% }) %>
 </div>
 
 <script src="/js/_flash.js"></script>
