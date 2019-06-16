@@ -1,14 +1,11 @@
 import { join } from "path";
-import crypto from "crypto";
 
 import { Request, Response, Router } from "express";
-import { MongoError } from "mongodb";
 
 import loggerFactory from "../utils/logger";
 import Validator from "../utils/validate";
-import User, { IUser } from "../models/User";
+import User, { IUserDocument } from "../models/User";
 import { signinRequire, signoutRequire } from "../middlewares/authenticate";
-import { SECRET } from "../config";
 
 const logger = loggerFactory("auth.ts");
 // url prefix: "/auth"
@@ -31,9 +28,8 @@ auth.post("/signup", signoutRequire, async (req: Request, res: Response) => {
     return res.redirect(join(req.baseUrl, "signup"));
   }
 
-  const passwordHash = crypto.createHmac("sha256", SECRET).update(<string>password).digest("hex");
   try {
-    const user: IUser = await User.create({ email, username, passwordHash });
+    await User.new(<string>email, <string>username, <string>password);
     logger.info(`${username} registered success.`);
     req.flash("info", "注册成功");
     return res.redirect(join(req.baseUrl, "signin"));
@@ -53,7 +49,7 @@ auth.get("/signin", signoutRequire, (req: Request, res: Response) => {
   return res.render("auth/signin", { post: undefined });
 });
 
-auth.post("/signin", signoutRequire, (req: Request, res: Response) => {
+auth.post("/signin", signoutRequire, async (req: Request, res: Response) => {
   const { username, password } = req.fields;
 
   const validator = new Validator();
@@ -65,18 +61,25 @@ auth.post("/signin", signoutRequire, (req: Request, res: Response) => {
     return res.redirect(join(req.baseUrl, "signup"));
   }
 
-  const passwordHash = crypto.createHmac("sha256", SECRET).update(<string>password).digest("hex");
-  User.findOne({ username }, (err: MongoError, user: IUser) => {
-    if (err) return res.redirect(join(req.baseUrl, "signin"));
+  try {
+    const user: IUserDocument = await User.queryByUsername(<string>username);
+    if (!user) {
+      req.flash("error", "未找到此用户");
+      return res.redirect(join(req.baseUrl, "signin"));
+    }
 
-    if (passwordHash !== user.passwordHash) {
+    if (!user.verifyPassword(<string>password)) {
       req.flash("error", "密码不正确");
       return res.redirect(join(req.baseUrl, "signin"));
     }
+
     req.flash("info", "登录成功");
     req.session.user = user;
-    return res.redirect("/");
-  });
+    return res.redirect("/posts/");
+  } catch (e) {
+    logger.error(`${username} sign in failed: ${e}`);
+    return res.redirect(join(req.baseUrl, "signin"));
+  }
 });
 
 // ---------------------------------------------------------------------------------------------------------------------
