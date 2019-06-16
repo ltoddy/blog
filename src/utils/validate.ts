@@ -5,7 +5,7 @@ interface IRegexs {
 const regexs: IRegexs = {
   email: /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/,
   username: /^[A-Za-z]+/,
-  url: /http:\/\/.+/
+  url: /https?:\/\/.+/
 };
 
 export default class Validator {
