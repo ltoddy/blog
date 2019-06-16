@@ -8,9 +8,8 @@
 }
 
 .post-container {
-  margin: 40px 0;
   line-height: 2;
-  margin-bottom: 50px;
+  margin: 40px 0 50px;
 }
 
 .post-title {
@@ -35,6 +34,21 @@
   margin: 30px auto;
   width: 80px;
   text-align: center;
+}
+
+.normal-button {
+  cursor: pointer;
+  border: 1px solid #dadada;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  padding: 10px 20px;
+  background: #fff;
+  margin: 30px auto 0;
+}
+
+.normal-button:hover {
+  background-color: lightgrey;
 }
 
 .comment-form-container {

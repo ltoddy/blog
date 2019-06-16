@@ -30,6 +30,13 @@
       <div id="markdown" class="post-html-body markdown">
         <%- post.htmlBody %>
       </div>
+
+      <% if (user) { %>
+        <div style="text-align: right;">
+          <a class="normal-button" href="/posts/edit/<%- post._id %>">编辑</a>
+          <a class="normal-button" href="/posts/delete/<%- post._id %>">删除</a>
+        </div>
+      <% } %>
     </div>
 
     <div class="comment-form-container">
@@ -44,7 +51,8 @@
         <input id="email" name="email" type="text" size="30" maxlength="255" required placeholder="为了使用gavatar的头像服务">
 
         <label for="body">评论</label>
-        <textarea name="body" id="body" required cols="45" rows="8" maxlength="65525" placeholder="支持markdown语法"></textarea>
+        <textarea name="body" id="body" required cols="45" rows="8" maxlength="65525"
+                  placeholder="支持markdown语法"></textarea>
 
         <input id="submit" name="submit" type="submit" value="发表评论">
       </form>
