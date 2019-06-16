@@ -41,9 +41,9 @@ const CommentSchema: Schema = new Schema<ICommentDocument>({
 });
 
 CommentSchema.statics.new = function (postId: string, author: string, email: string, body: string): Promise<ICommentDocument> {
-  const htmlBody = md.render(<string>body);
+  const htmlBody = md.render(body);
   const url = "https://www.gravatar.com/avatar/";
-  const gravatarHash = crypto.createHash("md5").update(<string>email).digest("hex");
+  const gravatarHash = crypto.createHash("md5").update(email).digest("hex");
   // 使用gravatar的头像服务
   const gravatar = `${join(url, gravatarHash)}?${querystring.stringify({ d: "identicon", s: "40", r: "g" })}`;
   const timestamp = moment(Date.now()).format("LL");
