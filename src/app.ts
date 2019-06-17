@@ -16,6 +16,7 @@ import postsRouter from "./router/posts";
 import commentsRouter from "./router/comments";
 import apiRouter from "./router/api";
 import pageNotFound from "./errors/404";
+import access from "./middlewares/access";
 import loggerFactory from "./utils/logger";
 
 const logger = loggerFactory("app.ts");
@@ -53,6 +54,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   res.locals.user = req.session.user;
   next();
 });
+app.use(access);
 
 app.use(express.static(path.join(__dirname, "../public"), { maxAge: 31557600000 }));
 
