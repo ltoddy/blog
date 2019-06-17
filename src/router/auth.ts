@@ -12,7 +12,7 @@ const logger = loggerFactory("auth.ts");
 const auth = Router();
 
 auth.get("/signup", signoutRequire, (req: Request, res: Response) => {
-  return res.render("auth/signup", { post: undefined });
+  return res.render("auth/signup", {});
 });
 
 auth.post("/signup", signoutRequire, async (req: Request, res: Response) => {
@@ -46,7 +46,7 @@ auth.post("/signup", signoutRequire, async (req: Request, res: Response) => {
 // ---------------------------------------------------------------------------------------------------------------------
 
 auth.get("/signin", signoutRequire, (req: Request, res: Response) => {
-  return res.render("auth/signin", { post: undefined });
+  return res.render("auth/signin", {});
 });
 
 auth.post("/signin", signoutRequire, async (req: Request, res: Response) => {

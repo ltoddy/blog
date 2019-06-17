@@ -16,7 +16,7 @@ const posts = Router();
 posts.get("/", async (req: Request, res: Response) => {
   try {
     const allPosts = await Post.queryAll();
-    return res.render("posts/index", { posts: allPosts, post: undefined });
+    return res.render("posts/index", { posts: allPosts });
   } catch (e) {
     logger.error(`query all posts failed: ${e}`);
     return res.status(500).end();
@@ -24,8 +24,7 @@ posts.get("/", async (req: Request, res: Response) => {
 });
 
 posts.get("/create", signinRequire, (req: Request, res: Response) => {
-  // { post: undefined } 是为了兼容 navigator.ejs，不然报错
-  return res.render("posts/create", { post: undefined });
+  return res.render("posts/create", {});
 });
 
 posts.post("/create", signinRequire, async (req: Request, res: Response) => {

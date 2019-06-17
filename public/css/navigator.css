@@ -25,25 +25,15 @@
   margin-top: 15px;
 }
 
-.navigator-subtitle {
-  display: none;
-  text-align: center;
-  position: relative;
-  color: #666;
-  font-size: 14px;
-  margin-top: 16px;
-  animation-duration: 5s;
-}
-
 .navigator-right {
   text-align: right;
   margin-top: 15px;
 }
 
-.navigator-left, .navigator-right {
-  width: 300px;
-  text-overflow: ellipsis;
-}
+/*.navigator-left, .navigator-right {*/
+/*  width: 300px;*/
+/*  text-overflow: ellipsis;*/
+/*}*/
 
 .navigator-left a, .navigator-right a {
   color: #666;
