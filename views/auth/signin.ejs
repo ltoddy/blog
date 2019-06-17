@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link type="favicon" rel="shortcut icon" href="/favicon.ico"/>
-  <title>登录</title>
+  <title>登入</title>
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/_flash.css">
   <link rel="stylesheet" href="/css/form.css">
@@ -15,21 +15,22 @@
 <%- include("../components/_flash") %>
 <%- include("../components/navigator") %>
 
-<div class="auth-page">
-  <div class="auth-container">
+<div class="container">
+  <div class="page-content">
+    <div class="auth">
+      <form class="primary-form" method="post" action="" enctype="multipart/form-data">
+        <label for="username">用户名</label>
+        <input id="username" type="text" name="username" maxlength="255" required>
 
-    <form class="primary-form" method="post" action="" enctype="multipart/form-data">
-      <label for="username">用户名</label>
-      <input id="username" type="text" name="username" maxlength="255" required>
+        <label for="password">密码</label>
+        <input id="password" type="password" name="password" maxlength="255" required>
 
-      <label for="password">密码</label>
-      <input id="password" type="password" name="password" maxlength="255" required>
-
-      <input id="submit" type="submit" value="登录">
-    </form>
-
+        <input id="submit" type="submit" value="登入">
+      </form>
+    </div>
   </div>
 </div>
+
 <%- include("../components/footer") %>
 
 <script src="/js/_flash.js"></script>

@@ -47,11 +47,11 @@ blog.example.com:80 {
 
 使用tmux打开两个终端，第一个终端运行`yarn watch-ts`， 第二个终端运行`yarn watch-node`。
 
-打开浏览器访问 `localhost:3000/posts/`
+打开浏览器访问 `localhost:3000`
 
 ## TODO
 
-- [ ] 全局样式优化
+- [x] 全局样式优化
 - [ ] 更新flash设计
 - [ ] 首页设计
 - [x] 后端部分异常处理

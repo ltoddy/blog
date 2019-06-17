@@ -13,16 +13,6 @@ const logger = loggerFactory("posts.ts");
 // url prefix: "/posts"
 const posts = Router();
 
-posts.get("/", async (req: Request, res: Response) => {
-  try {
-    const allPosts = await Post.queryAll();
-    return res.render("posts/index", { posts: allPosts });
-  } catch (e) {
-    logger.error(`query all posts failed: ${e}`);
-    return res.status(500).end();
-  }
-});
-
 posts.get("/create", signinRequire, (req: Request, res: Response) => {
   return res.render("posts/create", {});
 });

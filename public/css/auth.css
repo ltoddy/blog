@@ -1,8 +1,4 @@
-.auth-page {
-  background-color: #fff;
-}
-
-.auth-container {
-  max-width: 300px;
+.auth {
+  width: 300px;
   margin: 100px auto;
 }

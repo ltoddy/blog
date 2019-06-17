@@ -1,79 +1,73 @@
-.container {
-  width: 100%;
-  height: 100%;
+.posts {
+  margin: 100px 0;
 }
 
-.dropdown {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  background: rgba(255, 255, 255, .97);
+.post-block {
+  margin: 100px 0;
+  height: 440px;
+  position: relative;
+}
+
+.post-block:before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 590px;
+  position: absolute;
+  left: 50%;
+  background: #eaeaea;
+  top: -100px;
+  z-index: 0;
+}
+
+.post-block:nth-child(odd) {
+  text-align: left;
+}
+
+.post-block:nth-child(even) {
+  text-align: right;
+}
+
+.post-block:nth-child(odd) .post-else {
+  left: 660px;
+  text-align: left;
+}
+
+.post-block:nth-child(even) .post-else {
+  right: 660px;
+  text-align: left;
+}
+
+.post-wall {
+  display: inline-block;
+  width: 680px;
+  height: 440px;
+  overflow: hidden;
+  position: relative;
   z-index: 3;
-  top: -100%;
-  transition: top 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
 }
 
-.dropdown-menu {
-  text-align: center;
-  margin-top: 200px;
+.post-wall img {
+  display: block;
+  height: 440px;
+  width: 680px;
 }
 
-.dropdown-menu li {
-  font-size: 20px;
-  display: inline-block;
-  margin: 0 20px 20px 0;
-}
-
-.dropdown-menu a {
-  color: #666;
-  letter-spacing: 1px;
-}
-
-.dropdown p {
-  color: #999;
-  font-size: 14px;
+.post-else {
   position: absolute;
-  width: 100%;
-  text-align: center;
-  bottom: 30px;
+  top: 20px;
+  border: 1px solid #eaeaea;
+  width: 500px;
+  height: 400px;
 }
 
-.screen {
-  width: 100%;
-  height: 100%;
-  background-image: url("/images/first-background.png");
+.post-preview {
+  margin: 80px;
+  overflow-wrap: break-word;
+  height: 240px;
+  overflow: hidden;
 }
 
-.header {
-  position: absolute;
-  top: 70px;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-}
-
-.mu .me {
-  color: #333;
-}
-
-.me {
-  text-transform: none;
-  line-height: 1;
-  display: inline-block;
-  color: #fff;
-  font-size: 26px;
-  z-index: 4;
-}
-
-.menu {
-  color: rgb(195, 106, 82);
-  text-transform: none;
-  line-height: 1;
-  font-size: 20px;
-  padding: 6px 6px 5px;
-  border-radius: 2px;
-  cursor: pointer;
-  z-index: 4;
-  margin-top: -3px;
-  background: rgba(255, 255, 255, .9);
+.post-preview > .markdown-body {
+  font-size: 85%;
 }

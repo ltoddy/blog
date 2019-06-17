@@ -75,7 +75,7 @@ auth.post("/signin", signoutRequire, async (req: Request, res: Response) => {
 
     req.flash("info", "登录成功");
     req.session.user = user;
-    return res.redirect("/posts/");
+    return res.redirect("/");
   } catch (e) {
     logger.error(`${username} sign in failed: ${e}`);
     return res.redirect(join(req.baseUrl, "signin"));

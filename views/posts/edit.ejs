@@ -14,28 +14,31 @@
 <body>
 <%- include("../components/_flash") %>
 <%- include("../components/navigator") %>
+<div class="container">
+  <div class="page-content">
+    <div class="common">
+      <form class="primary-form" action="" method="post" enctype="multipart/form-data">
+        <label for="title">标题</label>
+        <input id="title" type="text" name="title" size="30" maxlength="255" required value="<%= post.title %>">
 
-<div class="post-page">
-  <div class="page-container">
-    <form class="primary-form" action="" method="post" enctype="multipart/form-data">
-      <label for="title">标题</label>
-      <input id="title" type="text" name="title" size="30" maxlength="255" required value="<%= post.title %>">
+        <label for="timestamp">时间戳</label>
+        <input id="timestamp" type="text" name="timestamp" size="30" maxlength="255" required
+               value="<%= post.timestamp %>">
 
-      <label for="timestamp">时间戳</label>
-      <input id="timestamp" type="text" name="timestamp" size="30" maxlength="255" required value="<%= post.timestamp %>">
+        <label for="wall">壁纸</label>
+        <input id="wall" type="text" name="wall" size="30" maxlength="255" required value="<%= post.wall %>"
+               placeholder="image absolute url">
 
-      <label for="wall">壁纸</label>
-      <input id="wall" type="text" name="wall" size="30" maxlength="255" required value="<%= post.wall %>"
-             placeholder="image absolute url">
+        <label for="body">内容</label>
+        <textarea id="body" name="body" cols="45" rows="18" maxlength="65525" required
+                  placeholder="支持markdown语法"><%= post.body %></textarea>
 
-      <label for="body">内容</label>
-      <textarea id="body" name="body" cols="45" rows="18" maxlength="65525" required
-                placeholder="支持markdown语法"><%= post.body %></textarea>
-
-      <input id="submit" name="submit" type="submit" value="更新">
-    </form>
+        <input id="submit" name="submit" type="submit" value="更新">
+      </form>
+    </div>
   </div>
 </div>
+
 <%- include("../components/footer") %>
 
 <script src="/js/_flash.js"></script>

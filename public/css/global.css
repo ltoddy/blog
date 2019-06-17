@@ -16,10 +16,12 @@ ul, ol {
 }
 
 a {
+  color: #555;
   text-decoration: none;
 }
 
 a:hover {
+  color: #333;
   text-decoration: none;
 }
 
@@ -42,4 +44,20 @@ fieldset, img {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+.container {
+  margin: 50px 0 0;
+  background-color: #fff;
+}
+
+.page-content {
+  width: 1200px;
+  min-width: 1200px;
+  margin: 0 auto;
+}
+
+.common {
+  width: 700px;
+  margin: 100px auto;
 }
