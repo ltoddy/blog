@@ -89,13 +89,20 @@ PostSchema.methods.comments = function (): Promise<ICommentDocument[]> {
   });
 };
 
-PostSchema.methods.delete = function (): Promise<void> {
+PostSchema.methods.deleteWithComments = function (): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     Post.deleteOne({ _id: this._id }, (err: MongoError) => {
       if (err) {
         logger.error(`delete ${this._id} post failed: ${err}`);
         return reject(err);
       }
+
+      // 即使没有被连同删除，影响不大
+      Comment.deleteMany({ postId: this._id }, (err: MongoError) => {
+        if (err) {
+          logger.error(`delete comments(postId: ${this._id}) failed: ${err}`);
+        }
+      });
 
       return resolve();
     });
@@ -134,9 +141,10 @@ export interface IPostDocument extends Document {
   views: number;
 
   comments: () => Promise<ICommentDocument[]>;
-  delete: () => Promise<void>;
+
+  deleteWithComments: () => Promise<void>;
+
   updateAllFields: (title: string, timestamp: string, body: string, wall: string) => Promise<IPostDocument>;
-  // update: () => Promise<void>;
 }
 
 export interface IPostModel extends Model<IPostDocument> {

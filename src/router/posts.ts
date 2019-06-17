@@ -129,7 +129,7 @@ posts.post("/delete/:id", async (req: Request, res: Response) => {
   try {
     // 这里删除一篇post做了两次数据库查询，优化？
     const post = await Post.queryById(id);
-    await post.delete();
+    await post.deleteWithComments();
     req.flash("info", "删除成功");
     return res.redirect(req.baseUrl);
   } catch (err) {
