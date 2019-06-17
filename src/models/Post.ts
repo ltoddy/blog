@@ -24,6 +24,10 @@ const PostSchema: Schema<IPostDocument> = new Schema<IPostDocument>({
     type: String,
     required: true,
   },
+  htmlPreview: {
+    type: String,
+    required: true,
+  },
   wall: { // image absolute url
     type: String,
     required: true,
@@ -43,7 +47,9 @@ const PostSchema: Schema<IPostDocument> = new Schema<IPostDocument>({
 // 静态方法
 PostSchema.statics.new = function (title: string, body: string, wall: string): Promise<IPostDocument> {
   const htmlBody = md.render(body);
-  return Post.create({ title, body, htmlBody, wall });
+  const preview = body.substring(0, 200);
+  const htmlPreview = md.render(preview);
+  return Post.create({ title, body, htmlBody, htmlPreview, wall });
 };
 
 PostSchema.statics.queryById = function (id: string): Promise<IPostDocument> {
@@ -112,12 +118,15 @@ PostSchema.methods.deleteWithComments = function (): Promise<void> {
 PostSchema.methods.updateAllFields = function (title: string, timestamp: string, body: string, wall: string): Promise<IPostDocument> {
   return new Promise<IPostDocument>((resolve, reject) => {
     const htmlBody = md.render(body);
+    const preview = body.substring(0, 200);
+    const htmlPreview = md.render(preview);
 
     Post.findByIdAndUpdate(this._id, {
       title,
       timestamp,
       body,
       htmlBody,
+      htmlPreview,
       wall
     }, (err: MongoError, post: IPostDocument) => {
       if (err) {

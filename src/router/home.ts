@@ -11,8 +11,8 @@ home.get("/", async (req: Request, res: Response) => {
   try {
     const allPosts = await Post.queryAll();
     return res.render("index", { posts: allPosts });
-  } catch (e) {
-    logger.error(`query all posts failed: ${e}`);
+  } catch (error) {
+    logger.error(`query all posts failed: ${error}`);
     return res.status(500).end();
   }
 });

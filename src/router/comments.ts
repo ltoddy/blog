@@ -18,16 +18,16 @@ comments.post("/", async (req: Request, res: Response) => {
     validator.email(<string>email).done(); // 检查邮箱
     validator.username(<string>author).done(); // 检查用户名
     validator.body(<string>body).done(); // 检查内容
-  } catch (e) {
-    req.flash("error", e.message);
+  } catch (error) {
+    req.flash("error", error.message);
     return res.redirect(join(req.baseUrl, "signup"));
   }
 
   try {
     await Comment.new(<string>postId, <string>author, <string>email, <string>body);
     req.flash("info", "创建留言成功");
-  } catch (e) {
-    logger.info(`create comment failed: ${e}`);
+  } catch (error) {
+    logger.info(`create comment failed: ${error}`);
     req.flash("error", "创建留言失败");
   }
   return res.redirect(`/posts/${postId}`);

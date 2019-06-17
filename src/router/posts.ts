@@ -24,9 +24,9 @@ posts.post("/create", signinRequire, async (req: Request, res: Response) => {
   try {
     validator.title(<string>title).done(); // 检查标题
     validator.body(<string>body).done(); // 检查内容
-    validator.absoluteUrl(<string>wall).done();
-  } catch (e) {
-    req.flash("error", e.message);
+    validator.absoluteUrl(<string>wall).done(); // 检查壁纸url
+  } catch (error) {
+    req.flash("error", error.message);
     return res.redirect(join(req.baseUrl, "create"));
   }
 
@@ -34,9 +34,9 @@ posts.post("/create", signinRequire, async (req: Request, res: Response) => {
     await Post.new(<string>title, <string>body, <string>wall);
     req.flash("info", "发布新文章成功");
     return res.redirect(join(req.baseUrl));
-  } catch (e) {
-    logger.error(`create post(${title}) failed. ${e.message}`);
-    if (e.message.match("dup key")) {
+  } catch (error) {
+    logger.error(`create post(${title}) failed. ${error.message}`);
+    if (error.message.match("dup key")) {
       req.flash("error", "文章重复");
     } else {
       req.flash("error", "创建文章失败，请重试");
@@ -53,7 +53,7 @@ posts.get("/:id", async (req: Request, res: Response) => {
     const post = await Post.queryById(id);
     const comments = await post.comments();
     return res.render("posts/post", { post, comments });
-  } catch (e) {
+  } catch (error) {
     req.flash("error", "未找到文章");
     return res.redirect(join(req.baseUrl));
   }
@@ -64,8 +64,8 @@ posts.get("/edit/:id", async (req: Request, res: Response) => {
   try {
     const post = await Post.queryById(id);
     return res.render("posts/edit", { post });
-  } catch (e) {
-    logger.error(`can't find (${id}) post: ${e}`);
+  } catch (error) {
+    logger.error(`can't find (${id}) post: ${error}`);
     req.flash("error", "未找到文章");
     return res.redirect(join(req.baseUrl));
   }
@@ -81,13 +81,13 @@ posts.post("/edit/:id", async (req: Request, res: Response) => {
     validator.title(<string>title).done(); // 检查标题
     validator.body(<string>body).done(); // 检查内容
     validator.absoluteUrl(<string>wall).done(); // 检查壁纸url
-  } catch (e) {
-    req.flash("error", e.message);
+  } catch (error) {
+    req.flash("error", error.message);
     return res.redirect(join(req.baseUrl, "edit", id));
   }
 
   try {
-    // 优化?
+    // TODO: 优化?
     const post = await Post.queryById(id);
     await post.updateAllFields(<string>title, <string>timestamp, <string>body, <string>wall);
     return res.redirect(join(req.baseUrl, id));
@@ -116,7 +116,7 @@ posts.post("/delete/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    // 这里删除一篇post做了两次数据库查询，优化？
+    // TODO: 这里删除一篇post做了两次数据库查询，优化？
     const post = await Post.queryById(id);
     await post.deleteWithComments();
     req.flash("info", "删除成功");

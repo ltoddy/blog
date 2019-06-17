@@ -1,20 +1,22 @@
 <div id="navigator-loader" class="navigator-loader"></div>
-<div id="top" class="navigator">
-  <span class="navigator-left">
-    <a href="/">全部文章</a>
+<header id="top" class="navigator">
+  <div class="navigator-left">
+    <a href="/">首页</a>
     <a href="/about">关于我</a>
+    <a href="https://bilibili.com/ltoddy" target="_blank">BiliBili</a>
     <a href="https://github.com/ltoddy" target="_blank">Github</a>
     <a href="https://twitter.com/ltoddygen" target="_blank">Twitter</a>
-    <a href="https://ltoddy.github.io" target="_blank">旧版blog</a>
-  </span>
+    <a href="https://ltoddy.github.io" target="_blank">旧blog</a>
+  </div>
 
-  <span class="navigator-right">
+  <div class="navigator-right">
     <% if (user) { %>
       <a href="/posts/create">创建文章</a>
+      <a href="/auth/profile">Profile</a>
       <a href="/auth/signout">登出</a>
     <% } else { %>
       <a href="/auth/signin">登入</a>
       <a href="/auth/signup">注册</a>
     <% } %>
-  </span>
-</div>
+  </div>
+</header>

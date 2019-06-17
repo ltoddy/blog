@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link type="favicon" rel="shortcut icon" href="/favicon.ico"/>
+  <title>个人信息</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/_flash.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/navigator.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+<%- include("../components/_flash") %>
+<%- include("../components/navigator") %>
+
+<div class="container">
+  <div class="page-content">
+    <div class="auth">
+      <form class="primary-form" method="post" action="" enctype="multipart/form-data">
+        <input type="hidden" id="id" name="id" value="<%= user._id %>">
+
+        <label for="email">邮箱</label>
+        <input id="email" type="text" name="email" maxlength="255" value="<%= user.email %>" required>
+
+        <label for="username">用户名</label>
+        <input id="username" type="text" name="username" maxlength="255" value="<%= user.username %>" required>
+
+        <label for="passwordHash">密码Hash</label>
+        <input id="passwordHash" type="text" name="passwordHash" maxlength="255" value="<%= user.passwordHash %>" required>
+
+        <label for="bio">个人介绍</label>
+        <textarea id="bio" name="bio" cols="45" rows="5" maxlength="65525"><%= user.bio %></textarea>
+
+        <input id="submit" type="submit" value="更新">
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include("../components/footer") %>
+
+<script src="/js/_flash.js"></script>
+<script src="/js/navigator.js"></script>
+</body>
+</html>
