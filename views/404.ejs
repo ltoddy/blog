@@ -3,12 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <link type="favicon" rel="shortcut icon" href="/favicon.ico"/>
-  <title>blog</title>
-  <link rel="stylesheet" href="css/global.css">
+  <title>ltoddy | 未找到页面</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/navigator.css">
+  <link rel="stylesheet" href="/css/error.css">
 </head>
 <body>
-<div class="container">
-  <h1>Page Not Found</h1>
+<%- include("./components/navigator") %>
+
+<div class="error-page">
+  <div class="error-container">
+    <div class="error-content">
+      <h1>404 Not Found</h1>
+      <p>您好像来到了未知区域</p>
+    </div>
+  </div>
 </div>
 </body>
 </html>
