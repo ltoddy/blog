@@ -68,4 +68,4 @@ blog.example.com:80 {
 - [ ] 创建新的文章与留言预览功能
 - [ ] 增加一些restful接口，方便blog迁移与重建
 - [ ] 对部分接口添加Graphql的支持
-- [ ] 更加未来，view层使用React，（客户端渲染或服务端渲染）
+- [ ] 更加未来，view层使用React，从mvc转向mvvm，（客户端渲染或服务端渲染）
