@@ -28,17 +28,17 @@
   text-align: right;
 }
 
-.post-block:nth-child(odd) .post-else {
+.post-block:nth-child(odd) .other {
   left: 660px;
   text-align: left;
 }
 
-.post-block:nth-child(even) .post-else {
+.post-block:nth-child(even) .other {
   right: 660px;
   text-align: left;
 }
 
-.post-wall {
+.one {
   display: inline-block;
   width: 680px;
   height: 440px;
@@ -47,13 +47,13 @@
   z-index: 3;
 }
 
-.post-wall img {
+.wall {
   display: block;
   height: 440px;
   width: 680px;
 }
 
-.post-else {
+.other {
   position: absolute;
   top: 20px;
   border: 1px solid #eaeaea;

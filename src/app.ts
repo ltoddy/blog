@@ -52,7 +52,7 @@ app.use(session({
 }));
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.locals.user = req.session.user;
-  next();
+  return next();
 });
 app.use(access);
 
