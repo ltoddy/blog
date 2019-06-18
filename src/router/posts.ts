@@ -91,7 +91,7 @@ posts.post("/edit/:id", async (req: Request, res: Response) => {
     const post = await Post.queryById(id);
     await post.updateAllFields(<string>title, <string>timestamp, <string>body, <string>wall);
     return res.redirect(join(req.baseUrl, id));
-  } catch (err) {
+  } catch (error) {
     logger.error(`update post (${id}) failed`);
     req.flash("error", "更新文章失败");
     return res.redirect(join(req.baseUrl, "update", id));
@@ -101,8 +101,8 @@ posts.post("/edit/:id", async (req: Request, res: Response) => {
 posts.get("/delete/:id", (req: Request, res: Response) => {
   const { id } = req.params;
 
-  Post.findById(id, (err: MongoError, post: IPostDocument) => {
-    if (err) {
+  Post.findById(id, (error: MongoError, post: IPostDocument) => {
+    if (error) {
       logger.error(`can't find (${id}) post`);
       req.flash("error", "未找到文章");
       return res.redirect(join(req.baseUrl, "delete", id));
@@ -121,8 +121,8 @@ posts.post("/delete/:id", async (req: Request, res: Response) => {
     await post.deleteWithComments();
     req.flash("info", "删除成功");
     return res.redirect(req.baseUrl);
-  } catch (err) {
-    logger.error(`delete (${id}) failed`);
+  } catch (error) {
+    logger.error(`delete (${id}) failed: ${error}`);
     req.flash("error", "删除失败，请重试");
     return res.redirect(join(req.baseUrl, "delete", id));
   }

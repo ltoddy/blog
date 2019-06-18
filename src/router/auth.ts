@@ -33,11 +33,14 @@ auth.post("/signup", signoutRequire, async (req: Request, res: Response) => {
     logger.info(`${username} registered success.`);
     req.flash("info", "注册成功");
     return res.redirect(join(req.baseUrl, "signin"));
-  } catch (err) {
+  } catch (error) {
     // 目前，在mongo的schema中定义了unique，这里使用字段的unique来判断是否有已经注册的同名用户，这种实现方式目前先待定。
-    logger.error(`create user(${username}) failed. ${err.message}`);
-    if (err.message.match("dup key")) req.flash("error", "该账号已被注册");
-    else req.flash("error", "创建用户失败，请重试.");
+    logger.error(`create user(${username}) failed. ${error.message}`);
+    if (error.message.match("dup key")) {
+      req.flash("error", "该账号已被注册");
+    } else {
+      req.flash("error", "创建用户失败，请重试.");
+    }
 
     return res.redirect(join(req.baseUrl, "signup"));
   }

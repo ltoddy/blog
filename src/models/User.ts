@@ -34,9 +34,9 @@ UserSchema.statics.new = function (email: string, username: string, password: st
 
 UserSchema.statics.queryByUsername = function (username: string): Promise<IUserDocument> {
   return new Promise<IUserDocument>((resolve, reject) => {
-    User.findOne({ username }, (err: MongoError, user: IUserDocument) => {
-      if (err) {
-        return reject(err);
+    User.findOne({ username }, (error: MongoError, user: IUserDocument) => {
+      if (error) {
+        return reject(error);
       }
 
       return resolve(user);
@@ -46,9 +46,9 @@ UserSchema.statics.queryByUsername = function (username: string): Promise<IUserD
 
 UserSchema.statics.queryById = function (id: string): Promise<IUserDocument> {
   return new Promise<IUserDocument>((resolve, reject) => {
-    User.findById(id, (err: MongoError, user: IUserDocument) => {
-      if (err) {
-        return reject(err);
+    User.findById(id, (error: MongoError, user: IUserDocument) => {
+      if (error) {
+        return reject(error);
       }
 
       return resolve(user);

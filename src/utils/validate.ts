@@ -1,3 +1,5 @@
+import { ValidateError } from "../errors";
+
 interface IRegexs {
   [key: string]: RegExp;
 }
@@ -7,6 +9,7 @@ const regexs: IRegexs = {
   username: /^[A-Za-z]+/,
   url: /https?:\/\/.+/
 };
+
 
 export default class Validator {
   private data: string;
@@ -60,62 +63,29 @@ export default class Validator {
     return this;
   }
 
-  // 废弃
-  // const validator = new Validator();
-  // const [ok, message] = validator.email(email).result();
-  // 这很 Golang (函数返回两个值)，不过在这里这种设计我个人认为是比较正确，优雅的。
-  public result(): [boolean, string] {
-    switch (this.mode) {
-      case "email":
-        if (!this.data) return [false, "邮箱不能为空"];
-        if (!regexs[this.mode].test(this.data)) return [false, "邮箱格式不正确"];
-        return [true, ""];
-      case "username":
-        if (!this.data) return [false, "用户名不能为空"];
-        if (!regexs[this.mode].test(this.data)) return [false, "用户名格式不正确"];
-        return [true, ""];
-      case "password":
-        const [password, password2] = this.data.split("\n");
-        if (!password || !password2) return [false, "密码不能为空"];
-        if (password !== password2) return [false, "两次密码不一致"];
-        return [true, ""];
-      case "title":
-        if (!this.data) return [false, "标题不能为空"];
-        return [true, ""];
-      case "body":
-        if (!this.data) return [false, "内容不能为空"];
-        return [true, ""];
-      case "url":
-        if (!regexs[this.mode].test(this.data)) return [false, "url格式不正确"];
-        return [true, ""];
-      default:
-        return [true, ""];
-    }
-  }
-
   public done() {
     switch (this.mode) {
       case "email":
-        if (!this.data) throw(new Error("邮箱不能为空"));
-        if (!regexs[this.mode].test(this.data)) throw(new Error("邮箱格式不正确"));
+        if (!this.data) throw(new ValidateError("邮箱不能为空"));
+        if (!regexs[this.mode].test(this.data)) throw(new ValidateError("邮箱格式不正确"));
         return;
       case "username":
-        if (!this.data) throw(new Error("用户名不能为空"));
-        if (!regexs[this.mode].test(this.data)) throw(new Error("用户名格式不正确"));
+        if (!this.data) throw(new ValidateError("用户名不能为空"));
+        if (!regexs[this.mode].test(this.data)) throw(new ValidateError("用户名格式不正确"));
         return;
       case "password":
         const [password, password2] = this.data.split("\n");
-        if (!password || !password2) throw(new Error("密码不能为空"));
-        if (password !== password2) throw(new Error("两次密码不一致"));
+        if (!password || !password2) throw(new ValidateError("密码不能为空"));
+        if (password !== password2) throw(new ValidateError("两次密码不一致"));
         return;
       case "title":
-        if (!this.data) throw(new Error("标题不能为空"));
+        if (!this.data) throw(new ValidateError("标题不能为空"));
         return;
       case "body":
-        if (!this.data) throw(new Error("内容不能为空"));
+        if (!this.data) throw(new ValidateError("内容不能为空"));
         return;
       case "url":
-        if (!regexs[this.mode].test(this.data)) throw(new Error("url格式不正确"));
+        if (!regexs[this.mode].test(this.data)) throw(new ValidateError("url格式不正确"));
         return;
       default:
         return;

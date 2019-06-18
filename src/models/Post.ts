@@ -55,10 +55,10 @@ PostSchema.statics.new = function (title: string, body: string, wall: string): P
 PostSchema.statics.queryById = function (id: string): Promise<IPostDocument> {
   return new Promise<IPostDocument>((resolve, reject) => {
     // considering Post.findByIdAndUpdate (文档上这个api的用法，在这里不合适，因为是要更改this里面的内容)
-    Post.findById(id, (err: MongoError, post: IPostDocument) => {
-      if (err) {
+    Post.findById(id, (error: MongoError, post: IPostDocument) => {
+      if (error) {
         logger.error(`can't find (${id}) post`);
-        return reject(err);
+        return reject(error);
       }
 
       post.views += 1;
@@ -70,9 +70,9 @@ PostSchema.statics.queryById = function (id: string): Promise<IPostDocument> {
 
 PostSchema.statics.queryAll = function (): Promise<IPostDocument[]> {
   return new Promise<IPostDocument[]>((resolve, reject) => {
-    Post.find((err: MongoError, posts: IPostDocument[]) => {
-      if (err) {
-        return reject(err);
+    Post.find((error: MongoError, posts: IPostDocument[]) => {
+      if (error) {
+        return reject(error);
       }
 
       return resolve(posts);
@@ -84,10 +84,10 @@ PostSchema.statics.queryAll = function (): Promise<IPostDocument[]> {
 // 实例方法
 PostSchema.methods.comments = function (): Promise<ICommentDocument[]> {
   return new Promise<ICommentDocument[]>((resolve, reject) => {
-    Comment.find({ postId: this._id }, (err: MongoError, comments: ICommentDocument[]) => {
-      if (err) {
-        logger.error(`query post's(${this._id}) comments failed: ${err}`);
-        return reject(err);
+    Comment.find({ postId: this._id }, (error: MongoError, comments: ICommentDocument[]) => {
+      if (error) {
+        logger.error(`query post's(${this._id}) comments failed: ${error}`);
+        return reject(error);
       }
 
       return resolve(comments);
@@ -97,16 +97,16 @@ PostSchema.methods.comments = function (): Promise<ICommentDocument[]> {
 
 PostSchema.methods.deleteWithComments = function (): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    Post.deleteOne({ _id: this._id }, (err: MongoError) => {
-      if (err) {
-        logger.error(`delete ${this._id} post failed: ${err}`);
-        return reject(err);
+    Post.deleteOne({ _id: this._id }, (error: MongoError) => {
+      if (error) {
+        logger.error(`delete ${this._id} post failed: ${error}`);
+        return reject(error);
       }
 
       // 即使没有被连同删除，影响不大
-      Comment.deleteMany({ postId: this._id }, (err: MongoError) => {
-        if (err) {
-          logger.error(`delete comments(postId: ${this._id}) failed: ${err}`);
+      Comment.deleteMany({ postId: this._id }, (error1: MongoError) => {
+        if (error1) {
+          logger.error(`delete comments(postId: ${this._id}) failed: ${error1}`);
         }
       });
 
@@ -128,10 +128,10 @@ PostSchema.methods.updateAllFields = function (title: string, timestamp: string,
       htmlBody,
       htmlPreview,
       wall
-    }, (err: MongoError, post: IPostDocument) => {
-      if (err) {
+    }, (error: MongoError, post: IPostDocument) => {
+      if (error) {
         logger.error(`update post (${this._id}) failed`);
-        return reject(err);
+        return reject(error);
       }
 
       return resolve(post);
