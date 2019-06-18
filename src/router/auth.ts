@@ -23,8 +23,8 @@ auth.post("/signup", signoutRequire, async (req: Request, res: Response) => {
     validator.email(<string>email).done(); // 检查邮箱
     validator.username(<string>username).done(); // 检查用户名
     validator.password(<string>password, <string>password2).done(); // 检查密码
-  } catch (e) {
-    req.flash("error", e.message);
+  } catch (error) {
+    req.flash("error", error.message);
     return res.redirect(join(req.baseUrl, "signup"));
   }
 
@@ -33,11 +33,14 @@ auth.post("/signup", signoutRequire, async (req: Request, res: Response) => {
     logger.info(`${username} registered success.`);
     req.flash("info", "注册成功");
     return res.redirect(join(req.baseUrl, "signin"));
-  } catch (err) {
+  } catch (error) {
     // 目前，在mongo的schema中定义了unique，这里使用字段的unique来判断是否有已经注册的同名用户，这种实现方式目前先待定。
-    logger.error(`create user(${username}) failed. ${err.message}`);
-    if (err.message.match("dup key")) req.flash("error", "该账号已被注册");
-    else req.flash("error", "创建用户失败，请重试.");
+    logger.error(`create user(${username}) failed. ${error.message}`);
+    if (error.message.match("dup key")) {
+      req.flash("error", "该账号已被注册");
+    } else {
+      req.flash("error", "创建用户失败，请重试.");
+    }
 
     return res.redirect(join(req.baseUrl, "signup"));
   }
@@ -56,8 +59,8 @@ auth.post("/signin", signoutRequire, async (req: Request, res: Response) => {
   try {
     validator.username(<string>username).done(); // 检查用户名
     validator.password(<string>password, <string>password).done(); // 检查密码
-  } catch (e) {
-    req.flash("error", e.message);
+  } catch (error) {
+    req.flash("error", error.message);
     return res.redirect(join(req.baseUrl, "signup"));
   }
 
@@ -76,8 +79,8 @@ auth.post("/signin", signoutRequire, async (req: Request, res: Response) => {
     req.flash("info", "登录成功");
     req.session.user = user;
     return res.redirect("/");
-  } catch (e) {
-    logger.error(`${username} sign in failed: ${e}`);
+  } catch (error) {
+    logger.error(`${username} sign in failed: ${error}`);
     return res.redirect(join(req.baseUrl, "signin"));
   }
 });
@@ -94,7 +97,23 @@ auth.get("/signout", signinRequire, (req: Request, res: Response) => {
 
 // TODO: 个人信息页面
 auth.get("/profile", signinRequire, (req: Request, res: Response) => {
-  return res.send("个人信息");
+  return res.render("auth/profile");
+});
+
+auth.post("/profile", signinRequire, async (req: Request, res: Response) => {
+  const { id, email, username, passwordHash, bio } = req.fields;
+  const user: IUserDocument = req.session.user;
+
+  try {
+    await user.updateAllFields(<string>email, <string>username, <string>passwordHash, <string>bio);
+
+    req.session.user = await User.queryById(<string>id);
+    res.locals.user = req.session.user;
+  } catch (error) {
+
+  }
+
+  return res.redirect(join(req.baseUrl, "profile"));
 });
 
 export default auth;

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link type="favicon" rel="shortcut icon" href="/favicon.ico"/>
-  <title>全部文章</title>
+  <title>首页</title>
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/_flash.css">
   <link rel="stylesheet" href="/css/navigator.css">
@@ -21,21 +21,22 @@
     <div class="posts"></div>
     <% posts.forEach(function (post) { %>
       <div class="post-block">
-        <a class="post-wall" href="/posts/<%= post.id %>">
-          <img src="<%= post.wall %>" alt="wall">
+        <a class="one" href="/posts/<%= post.id %>">
+          <img class="wall" src="<%= post.wall %>" alt="wall">
         </a>
 
-        <div class="post-else">
+        <div class="other">
           <div class="post-preview">
             <p><%- post.timestamp %></p>
             <h3><a href="/posts/<%= post.id %>"><%- post.title %></a></h3>
             <div class="markdown-body">
-              <%- post.htmlBody %>
+              <%- post.htmlPreview %>
             </div>
           </div>
         </div>
       </div>
     <% }) %>
+
   </div>
 </div>
 

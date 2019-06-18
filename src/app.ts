@@ -15,7 +15,6 @@ import authRouter from "./router/auth";
 import postsRouter from "./router/posts";
 import commentsRouter from "./router/comments";
 import apiRouter from "./router/api";
-import pageNotFound from "./errors/404";
 import access from "./middlewares/access";
 import loggerFactory from "./utils/logger";
 
@@ -52,7 +51,7 @@ app.use(session({
 }));
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.locals.user = req.session.user;
-  next();
+  return next();
 });
 app.use(access);
 
@@ -65,6 +64,11 @@ app.use("/posts", postsRouter);
 app.use("/comments", commentsRouter);
 app.use("/api", apiRouter);
 
-app.use(pageNotFound);
+// 404 page not found
+app.use((req: Request, res: Response) => {
+  if (!res.headersSent) {
+    res.status(404).render("404");
+  }
+});
 
 export default app;

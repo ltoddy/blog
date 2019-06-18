@@ -34,9 +34,21 @@ UserSchema.statics.new = function (email: string, username: string, password: st
 
 UserSchema.statics.queryByUsername = function (username: string): Promise<IUserDocument> {
   return new Promise<IUserDocument>((resolve, reject) => {
-    User.findOne({ username }, (err: MongoError, user: IUserDocument) => {
-      if (err) {
-        return reject(err);
+    User.findOne({ username }, (error: MongoError, user: IUserDocument) => {
+      if (error) {
+        return reject(error);
+      }
+
+      return resolve(user);
+    });
+  });
+};
+
+UserSchema.statics.queryById = function (id: string): Promise<IUserDocument> {
+  return new Promise<IUserDocument>((resolve, reject) => {
+    User.findById(id, (error: MongoError, user: IUserDocument) => {
+      if (error) {
+        return reject(error);
       }
 
       return resolve(user);
@@ -52,6 +64,11 @@ UserSchema.methods.verifyPassword = function (password: string): boolean {
   return passwordHash === this.passwordHash;
 };
 
+// TODO
+UserSchema.methods.updateAllFields = function (email: string, username: string, passwordHash: string, bio: string): void {
+
+};
+
 
 export interface IUserDocument extends Document {
   id: Types.ObjectId;
@@ -61,12 +78,16 @@ export interface IUserDocument extends Document {
   bio: String;
 
   verifyPassword(password: string): boolean;
+
+  updateAllFields(email: string, username: string, passwordHash: string, bio: string): void;
 }
 
 export interface IUserModel extends Model<IUserDocument> {
   new: (email: string, username: string, password: string) => Promise<IUserDocument>;
 
   queryByUsername: (username: string) => Promise<IUserDocument>;
+
+  queryById: (id: string) => Promise<IUserDocument>;
 }
 
 const User: IUserModel = model<IUserDocument, IUserModel>("User", UserSchema);

@@ -26,10 +26,6 @@ const CommentSchema: Schema = new Schema<ICommentDocument>({
     type: String,
     required: true,
   },
-  gravatar: { // gravatar uri
-    type: String,
-    required: true,
-  },
   postId: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -40,16 +36,22 @@ const CommentSchema: Schema = new Schema<ICommentDocument>({
   }
 });
 
+// 静态方法
 CommentSchema.statics.new = function (postId: string, author: string, email: string, body: string): Promise<ICommentDocument> {
   const htmlBody = md.render(body);
-  const url = "https://www.gravatar.com/avatar/";
-  const gravatarHash = crypto.createHash("md5").update(email).digest("hex");
-  // 使用gravatar的头像服务
-  const gravatar = `${join(url, gravatarHash)}?${querystring.stringify({ d: "identicon", s: "40", r: "g" })}`;
   const timestamp = moment(Date.now()).format("LL");
 
-  return Comment.create({ postId, author, email, body, htmlBody, gravatar, timestamp });
+  return Comment.create({ postId, author, email, body, htmlBody, timestamp });
 };
+
+
+// 实例方法
+CommentSchema.methods.gravatar = function (s: string = "40", d: string = "identicon", r: string = "g"): string {
+  const url = "https://www.gravatar.com/avatar/";
+  const hash = crypto.createHash("md5").update(this.email).digest("hex");
+  return `${join(url, hash)}?${querystring.stringify({ d, s, r })}`;
+};
+
 
 export interface ICommentDocument extends Document {
   id: Types.ObjectId;
@@ -57,9 +59,12 @@ export interface ICommentDocument extends Document {
   htmlBody: string;
   author: string;
   email: string;
-  gravatar: string;
   postId: Types.ObjectId;
   timestamp: string;
+
+  // 使用gravatar的头像服务
+  // size, default, rating
+  gravatar: (s: string, d: string, r: string) => string;
 }
 
 export interface ICommentModel extends Model<ICommentDocument> {
