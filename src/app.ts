@@ -5,6 +5,7 @@ import compression from "compression"; // compresses requests
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import session from "express-session";
+import lusca from "lusca";
 import formidable from "express-formidable";
 import flash from "express-flash";
 import mongo from "connect-mongo";
@@ -39,6 +40,8 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(flash());
+app.use(lusca.xframe("SAMEORIGIN"));
+app.use(lusca.xssProtection(true));
 app.use(formidable());
 app.use(session({
   resave: true,

@@ -1,9 +1,17 @@
-# blog
+<h1 align="center">Welcome to my blog 👋</h1>
+<p>
+  <a href="https://ci.appveyor.com/project/ltoddy/blog">
+    <img alt="Build status" src="https://ci.appveyor.com/api/projects/status/7s0giiex0yx6p03t?svg=true" target="_blank" />
+  </a>
+  <a href="https://circleci.com/gh/ltoddy/blog">
+    <img alt="CircleCI" src="https://circleci.com/gh/ltoddy/blog.svg?style=svg" target="_blank" />
+  </a>
+  <a href="https://twitter.com/ltoddygen">
+    <img alt="Twitter: ltoddygen" src="https://img.shields.io/twitter/follow/ltoddygen.svg?style=social" target="_blank" />
+  </a>
+</p>
 
-[![Build status](https://ci.appveyor.com/api/projects/status/7s0giiex0yx6p03t?svg=true)](https://ci.appveyor.com/project/ltoddy/blog)
-[![CircleCI](https://circleci.com/gh/ltoddy/blog.svg?style=svg)](https://circleci.com/gh/ltoddy/blog)
-
-<div align="center">小清新风格的blog</div>
+> 记录生活与技术 (小清新风格的blog)
 
 ![demo](https://img.vim-cn.com/1f/04917d4f94052d54bd5c3cae867bd56bfa1aec.jpg)
 
@@ -61,7 +69,7 @@ blog.example.com:80 {
 - [ ] 分页
 - [ ] 404页面样式
 - [ ] 增加外部配置，提高二次重用性
-- [ ] 完成后端功能，如阅读量，格式化时间戳
+- [x] 完成后端功能，如阅读量，格式化时间戳
 - [ ] 重构校验表单机制
 - [ ] 前端校验
 - [ ] 完善单元测试
@@ -69,3 +77,8 @@ blog.example.com:80 {
 - [ ] 增加一些restful接口，方便blog迁移与重建
 - [ ] 对部分接口添加Graphql的支持
 - [ ] 更加未来，view层使用React，从mvc转向mvvm，（客户端渲染或服务端渲染）
+
+## 📝 License
+
+Copyright © 2019 [ltoddy &lt;taoliu0509@gmail.com&gt;](https://github.com/ltoddy).<br />
+This project is [MIT](https://github.com/ltoddy/blog/blob/master/LICENSE) licensed.
