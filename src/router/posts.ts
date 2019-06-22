@@ -33,7 +33,7 @@ posts.post("/create", signinRequire, async (req: Request, res: Response) => {
   try {
     await Post.new(<string>title, <string>body, <string>wall);
     req.flash("info", "发布新文章成功");
-    return res.redirect(join(req.baseUrl));
+    return res.redirect("/");
   } catch (error) {
     logger.error(`create post(${title}) failed. ${error.message}`);
     if (error.message.match("dup key")) {
@@ -55,7 +55,7 @@ posts.get("/:id", async (req: Request, res: Response) => {
     return res.render("posts/post", { post, comments });
   } catch (error) {
     req.flash("error", "未找到文章");
-    return res.redirect(join(req.baseUrl));
+    return res.redirect("/");
   }
 });
 
@@ -67,7 +67,7 @@ posts.get("/edit/:id", async (req: Request, res: Response) => {
   } catch (error) {
     logger.error(`can't find (${id}) post: ${error}`);
     req.flash("error", "未找到文章");
-    return res.redirect(join(req.baseUrl));
+    return res.redirect("/");
   }
 });
 
