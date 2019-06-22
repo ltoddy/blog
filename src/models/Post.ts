@@ -69,8 +69,9 @@ PostSchema.statics.queryById = function (id: string): Promise<IPostDocument> {
 };
 
 PostSchema.statics.queryAll = function (): Promise<IPostDocument[]> {
+  // sort
   return new Promise<IPostDocument[]>((resolve, reject) => {
-    Post.find((error: MongoError, posts: IPostDocument[]) => {
+    Post.find({}, null, { sort: { _id: -1 } }, (error: MongoError, posts: IPostDocument[]) => {
       if (error) {
         return reject(error);
       }
