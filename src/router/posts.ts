@@ -98,18 +98,17 @@ posts.post("/edit/:id", async (req: Request, res: Response) => {
   }
 });
 
-posts.get("/delete/:id", (req: Request, res: Response) => {
+posts.get("/delete/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  Post.findById(id, (error: MongoError, post: IPostDocument) => {
-    if (error) {
-      logger.error(`can't find (${id}) post`);
-      req.flash("error", "未找到文章");
-      return res.redirect(join(req.baseUrl, "delete", id));
-    } else {
-      return res.render("posts/delete", { post });
-    }
-  });
+  try {
+    const post = await Post.queryById(id);
+    return res.render("posts/delete", { post });
+  } catch (error) {
+    logger.error(`can't find (${id}) post`);
+    req.flash("error", "未找到文章");
+    return res.redirect(join(req.baseUrl, "delete", id));
+  }
 });
 
 posts.post("/delete/:id", async (req: Request, res: Response) => {
@@ -120,7 +119,7 @@ posts.post("/delete/:id", async (req: Request, res: Response) => {
     const post = await Post.queryById(id);
     await post.deleteWithComments();
     req.flash("info", "删除成功");
-    return res.redirect(req.baseUrl);
+    return res.redirect("/");
   } catch (error) {
     logger.error(`delete (${id}) failed: ${error}`);
     req.flash("error", "删除失败，请重试");

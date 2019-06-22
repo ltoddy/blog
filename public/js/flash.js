@@ -3,7 +3,6 @@ window.onload = function () {
 
   if (closeBtn) {
     closeBtn.onclick = function (event) {
-      event.preventDefault();
       const navs = document.getElementsByClassName("flash-content");
 
       for (let i = 0; i < navs.length; i++) {
