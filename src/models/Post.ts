@@ -62,7 +62,7 @@ PostSchema.statics.queryById = function (id: string): Promise<IPostDocument> {
       }
 
       post.views += 1;
-      post.save().catch(() => undefined); // 异常不作处理，阅读量增长一的异常目前不重要
+      post.save().catch(() => null); // 异常不作处理，阅读量增长一的异常目前不重要
       return resolve(post);
     });
   });

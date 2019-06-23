@@ -88,7 +88,7 @@ auth.post("/signin", signoutRequire, async (req: Request, res: Response) => {
 // ---------------------------------------------------------------------------------------------------------------------
 
 auth.get("/signout", signinRequire, (req: Request, res: Response) => {
-  req.session.user = undefined;
+  req.session.user = null;
   req.flash("info", "登出成功");
   return res.redirect(join(req.baseUrl, "signin"));
 });
