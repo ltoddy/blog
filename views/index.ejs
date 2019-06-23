@@ -18,7 +18,6 @@
 
 <div class="container">
   <div class="page-content">
-    <div class="posts"></div>
     <% posts.forEach(function (post) { %>
       <div class="post-block">
         <a class="one" href="/posts/<%= post.id %>">
@@ -27,11 +26,11 @@
 
         <div class="other">
           <div class="post-preview">
-            <p><%- post.timestamp %></p>
+            <time><%- post.timestamp %></time>
             <h3><a href="/posts/<%= post.id %>"><%- post.title %></a></h3>
-            <div class="markdown-body">
+            <article class="markdown-body">
               <%- post.htmlPreview %>
-            </div>
+            </article>
           </div>
         </div>
       </div>

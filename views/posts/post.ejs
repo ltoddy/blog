@@ -21,16 +21,16 @@
   <div class="page-content">
     <div class="common">
       <div id="post">
-        <div class="post-title"><%= post.title %></div>
+        <header class="post-title"><%= post.title %></header>
         <div class="post-meta">
-          <span class="post-timestamp"><%- post.timestamp %></span>
+          <time class="post-timestamp"><%- post.timestamp %></time>
           <span class="post-views">阅读 <%- post.views %></span>
         </div>
 
         <div class="post-divider"></div>
-        <div id="markdown-body" class="post-html-body markdown-body">
+        <article id="markdown-body" class="post-html-body markdown-body">
           <%- post.htmlBody %>
-        </div>
+        </article>
 
         <% if (user) { %>
           <div style="text-align: right;">
