@@ -1,12 +1,11 @@
 import { join } from "path";
 
 import { Request, Response, Router } from "express";
-import { MongoError } from "mongodb";
 
 import loggerFactory from "../utils/logger";
 import Validator from "../utils/validate";
 import { signinRequire } from "../middlewares/authenticate";
-import Post, { IPostDocument } from "../models/Post";
+import Post from "../models/Post";
 
 
 const logger = loggerFactory("posts.ts");

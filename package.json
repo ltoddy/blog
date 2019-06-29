@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "serve": "node dist/server.js",
+    "serve": "NODE_ENV=production; node dist/server.js",
     "watch-node": "nodemon dist/server.js",
     "watch-ts": "tsc -w",
     "lint": "tslint -c tslint.json -p tsconfig.json",
