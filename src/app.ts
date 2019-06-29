@@ -15,6 +15,7 @@ import homeRouter from "./router/home";
 import authRouter from "./router/auth";
 import postsRouter from "./router/posts";
 import commentsRouter from "./router/comments";
+import adminRouter from "./router/admin";
 import apiRouter from "./router/api";
 import access from "./middlewares/access";
 import loggerFactory from "./utils/logger";
@@ -65,6 +66,7 @@ app.use("/", homeRouter);
 app.use("/auth", authRouter);
 app.use("/posts", postsRouter);
 app.use("/comments", commentsRouter);
+app.use("/admin", adminRouter);
 app.use("/api", apiRouter);
 
 // 404 page not found

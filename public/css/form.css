@@ -49,3 +49,23 @@
 .primary-form input[type="submit"]:hover {
   background-color: lightgrey;
 }
+
+.primary-form input[type="checkbox"] {
+  margin: auto 0;
+}
+
+.post-item {
+  border-collapse: collapse;
+  display: grid;
+  grid-template-columns: 80% 20%;
+  border: 1px solid #dadada;
+  padding: 10px 20px;
+}
+
+.post-item:hover {
+  background-color: lightgrey;
+}
+
+.post-item > label {
+  margin: 0;
+}
