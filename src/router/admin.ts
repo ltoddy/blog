@@ -21,10 +21,17 @@ admin.get("/dump", signinRequire, async (req: Request, res: Response) => {
 });
 
 admin.post("/dump", signinRequire, async (req: Request, res: Response) => {
-  const postIds = Object.values(req.fields);
-  console.log("postIds: ", postIds);
-  // TODO
-  return res.redirect(join(req.baseUrl, "dump"));
+  try {
+    const postIds = <string[]>Object.values(req.fields);
+    const postsAndComments = await Post.queryManyWithComments(postIds);
+    const data = { data: postsAndComments };
+    res.setHeader("Content-Type", "application/download");
+    res.setHeader("Content-Disposition", "attachment;filename=dump.json");
+    return res.send(data);
+  } catch (error) {
+    logger.error(`download all posts failed: ${error}`);
+    return res.redirect(join(req.baseUrl, "dump"));
+  }
 });
 
 

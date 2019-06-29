@@ -9,6 +9,12 @@ import Comment, { ICommentDocument } from "./Comment";
 const md = new MarkdownIt();
 const logger = loggerFactory("Posts.ts");
 
+export interface IPostAndComments {
+  post: IPostDocument;
+  comments: ICommentDocument[];
+}
+
+
 const PostSchema: Schema<IPostDocument> = new Schema<IPostDocument>({
   title: {
     type: String,
@@ -81,6 +87,20 @@ PostSchema.statics.queryAll = function (): Promise<IPostDocument[]> {
   });
 };
 
+PostSchema.statics.queryWithComments = async function (postId: string): Promise<IPostAndComments> {
+  try {
+    // TODO: 优化?
+    const post: IPostDocument = await Post.queryById(postId);
+    const comments: ICommentDocument[] = await post.comments();
+    return Promise.resolve<IPostAndComments>({ post, comments });
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+PostSchema.statics.queryManyWithComments = function (postIds: string[]): Promise<IPostAndComments[]> {
+  return Promise.all(postIds.map((postId: string) => Post.queryWithComments(postId)));
+};
 
 // 实例方法
 PostSchema.methods.comments = function (): Promise<ICommentDocument[]> {
@@ -163,6 +183,10 @@ export interface IPostModel extends Model<IPostDocument> {
   queryById: (id: string) => Promise<IPostDocument>;
 
   queryAll: () => Promise<IPostDocument[]>;
+
+  queryWithComments: (postId: string) => Promise<IPostAndComments>;
+
+  queryManyWithComments: (postIds: string[]) => Promise<IPostAndComments[]>;
 }
 
 const Post: IPostModel = model<IPostDocument, IPostModel>("Post", PostSchema);
