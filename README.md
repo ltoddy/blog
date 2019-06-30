@@ -74,7 +74,7 @@ blog.example.com:80 {
 - [ ] 重构校验表单机制
 - [ ] 前端校验
 - [ ] 完善单元测试
-- [ ] 增加一些restful接口，方便blog迁移与重建
+- [x] blog迁移与重建
 - [ ] 对部分接口添加Graphql的支持
 - [ ] 更加未来，view层使用React，从mvc转向mvvm，（客户端渲染或服务端渲染）
 
