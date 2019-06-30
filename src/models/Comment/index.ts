@@ -1,15 +1,18 @@
-import crypto from "crypto";
-import { join } from "path";
-import querystring from "querystring";
-
 import { Document, model, Model, Schema, Types } from "mongoose";
 import moment from "moment";
-import MarkdownIt from "markdown-it";
-
-const md = new MarkdownIt();
 
 
-const CommentSchema: Schema = new Schema<ICommentDocument>({
+export interface IComment {
+  _id: string;
+  body: string;
+  htmlBody: string;
+  author: string;
+  email: string;
+  postId: string;
+  timestamp: string;
+}
+
+export const CommentSchema: Schema = new Schema<ICommentDocument>({
   body: {
     type: String, // raw markdown content
     required: true,
@@ -36,23 +39,6 @@ const CommentSchema: Schema = new Schema<ICommentDocument>({
   }
 });
 
-// 静态方法
-CommentSchema.statics.new = function (postId: string, author: string, email: string, body: string): Promise<ICommentDocument> {
-  const htmlBody = md.render(body);
-  const timestamp = moment(Date.now()).format("LL");
-
-  return Comment.create({ postId, author, email, body, htmlBody, timestamp });
-};
-
-
-// 实例方法
-CommentSchema.methods.gravatar = function (s: string = "40", d: string = "identicon", r: string = "g"): string {
-  const url = "https://www.gravatar.com/avatar/";
-  const hash = crypto.createHash("md5").update(this.email).digest("hex");
-  return `${join(url, hash)}?${querystring.stringify({ d, s, r })}`;
-};
-
-
 export interface ICommentDocument extends Document {
   id: Types.ObjectId;
   body: string;
@@ -69,6 +55,8 @@ export interface ICommentDocument extends Document {
 
 export interface ICommentModel extends Model<ICommentDocument> {
   new: (postId: string, author: string, email: string, body: string) => Promise<ICommentDocument>;
+
+  fromJson: (data: IComment) => Promise<void>;
 }
 
 const Comment: ICommentModel = model<ICommentDocument, ICommentModel>("Comment", CommentSchema);
