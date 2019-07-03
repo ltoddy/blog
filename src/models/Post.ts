@@ -4,6 +4,7 @@ import { MongoError } from "mongodb";
 import MarkdownIt from "markdown-it";
 
 import Comment, { ICommentDocument } from "./Comment";
+import { POSTS_PER_PAGE } from "../config";
 
 const md = new MarkdownIt();
 
@@ -106,6 +107,33 @@ PostSchema.statics.fromJson = function (data: IPostDocument): Promise<void> {
   });
 };
 
+PostSchema.statics.paginate = function (page: number, perPage: number = POSTS_PER_PAGE): Promise<IPostDocument[]> {
+  // @param page: >= 0
+  // @param perPage: > 0
+
+  if (page < 0) {
+    page = 0;
+  }
+
+  if (perPage <= 0) {
+    perPage = POSTS_PER_PAGE;
+  }
+
+  const limit = perPage;
+  const skip = page * perPage;
+
+  return new Promise<IPostDocument[]>((resolve, reject) => {
+    Post.find({}, null, { limit, skip }, (error: MongoError, posts: IPostDocument[]): void => {
+      if (error) {
+        return reject(error);
+      }
+
+      return resolve(posts);
+    });
+  });
+};
+
+
 // --------------------------------------
 
 // 实例方法
@@ -197,6 +225,8 @@ export interface IPostModel extends Model<IPostDocument> {
   queryManyWithComments: (postIds: string[]) => Promise<IPostAndComments[]>;
 
   fromJson: (data: IPostDocument) => Promise<void>;
+
+  paginate: (page: number, perPage: number) => Promise<IPostDocument[]>;
 }
 
 const Post: IPostModel = model<IPostDocument, IPostModel>("Post", PostSchema);
