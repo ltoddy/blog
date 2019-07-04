@@ -35,7 +35,18 @@
         </div>
       </div>
     <% }) %>
+  </div>
 
+  <div class="pagination-container">
+    <ul class="pagination">
+      <li <% if (!hasPrev) { %>class="disable"<% } %>>
+        <a href="/?page=<%= prevPage %>">&laquo; 上一页</a>
+      </li>
+
+      <li <% if (!hasNext) { %>class="disable"<% } %>>
+        <a href="/?page=<%= nextPage %>">下一页 &raquo;</a>
+      </li>
+    </ul>
   </div>
 </div>
 

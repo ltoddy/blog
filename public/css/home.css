@@ -67,3 +67,22 @@
 .post-preview > .markdown-body {
   font-size: 85%;
 }
+
+.pagination-container {
+  margin: 50px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination > li {
+  margin: 0 10px;
+}
+
+.pagination .disable > a {
+  cursor: not-allowed;
+  color: #ddd;
+  pointer-events: none;
+}

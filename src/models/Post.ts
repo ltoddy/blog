@@ -4,9 +4,15 @@ import { MongoError } from "mongodb";
 import MarkdownIt from "markdown-it";
 
 import Comment, { ICommentDocument } from "./Comment";
+import { POSTS_PER_PAGE } from "../config";
 
 const md = new MarkdownIt();
 
+export interface IPostPagination {
+  posts: IPostDocument[];
+  hasPrev: boolean;
+  hasNext: boolean;
+}
 
 const PostSchema: Schema<IPostDocument> = new Schema<IPostDocument>({
   title: {
@@ -106,6 +112,42 @@ PostSchema.statics.fromJson = function (data: IPostDocument): Promise<void> {
   });
 };
 
+PostSchema.statics.paginate = async function (page: number, perPage: number = POSTS_PER_PAGE): Promise<IPostPagination> {
+  // blog这种系统，无需考虑效率，因为数据数量级太小
+
+  const limit: number = perPage;
+  const skip: number = page * perPage;
+  const total: number = await this.total({});
+  const totalPage: number = Math.floor(total / perPage);
+
+  return new Promise<IPostPagination>((resolve, reject) => {
+    Post.find({}, null, { limit, skip }, (error: MongoError, posts: IPostDocument[]): void => {
+      if (error) {
+        return reject(error);
+      }
+
+      return resolve({
+        posts,
+        hasPrev: page > 0,
+        hasNext: page < totalPage,
+      });
+    });
+  });
+};
+
+PostSchema.statics.total = function (conditions: any): Promise<number> {
+  return new Promise<number>((resolve, reject) => {
+    Post.count(conditions, (error: MongoError, count: number) => {
+      if (error) {
+        return reject(error);
+      }
+
+      return resolve(count);
+    });
+  });
+};
+
+
 // --------------------------------------
 
 // 实例方法
@@ -197,6 +239,10 @@ export interface IPostModel extends Model<IPostDocument> {
   queryManyWithComments: (postIds: string[]) => Promise<IPostAndComments[]>;
 
   fromJson: (data: IPostDocument) => Promise<void>;
+
+  paginate: (page: number, perPage: number) => Promise<IPostPagination>;
+
+  total: (conditions: any) => Promise<number>;
 }
 
 const Post: IPostModel = model<IPostDocument, IPostModel>("Post", PostSchema);
