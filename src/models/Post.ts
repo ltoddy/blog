@@ -8,6 +8,11 @@ import { POSTS_PER_PAGE } from "../config";
 
 const md = new MarkdownIt();
 
+export interface IPostPagination {
+  posts: IPostDocument[];
+  hasPrev: boolean;
+  hasNext: boolean;
+}
 
 const PostSchema: Schema<IPostDocument> = new Schema<IPostDocument>({
   title: {
@@ -107,28 +112,37 @@ PostSchema.statics.fromJson = function (data: IPostDocument): Promise<void> {
   });
 };
 
-PostSchema.statics.paginate = function (page: number, perPage: number = POSTS_PER_PAGE): Promise<IPostDocument[]> {
-  // @param page: >= 0
-  // @param perPage: > 0
+PostSchema.statics.paginate = async function (page: number, perPage: number = POSTS_PER_PAGE): Promise<IPostPagination> {
+  // blog这种系统，无需考虑效率，因为数据数量级太小
 
-  if (page < 0) {
-    page = 0;
-  }
+  const limit: number = perPage;
+  const skip: number = page * perPage;
+  const total: number = await this.total({});
+  const totalPage: number = Math.floor(total / perPage);
 
-  if (perPage <= 0) {
-    perPage = POSTS_PER_PAGE;
-  }
-
-  const limit = perPage;
-  const skip = page * perPage;
-
-  return new Promise<IPostDocument[]>((resolve, reject) => {
+  return new Promise<IPostPagination>((resolve, reject) => {
     Post.find({}, null, { limit, skip }, (error: MongoError, posts: IPostDocument[]): void => {
       if (error) {
         return reject(error);
       }
 
-      return resolve(posts);
+      return resolve({
+        posts,
+        hasPrev: page > 0,
+        hasNext: page < totalPage,
+      });
+    });
+  });
+};
+
+PostSchema.statics.total = function (conditions: any): Promise<number> {
+  return new Promise<number>((resolve, reject) => {
+    Post.count(conditions, (error: MongoError, count: number) => {
+      if (error) {
+        return reject(error);
+      }
+
+      return resolve(count);
     });
   });
 };
@@ -226,7 +240,9 @@ export interface IPostModel extends Model<IPostDocument> {
 
   fromJson: (data: IPostDocument) => Promise<void>;
 
-  paginate: (page: number, perPage: number) => Promise<IPostDocument[]>;
+  paginate: (page: number, perPage: number) => Promise<IPostPagination>;
+
+  total: (conditions: any) => Promise<number>;
 }
 
 const Post: IPostModel = model<IPostDocument, IPostModel>("Post", PostSchema);
