@@ -86,7 +86,6 @@ posts.post("/edit/:id", async (req: Request, res: Response) => {
   }
 
   try {
-    // TODO: 优化?
     const post = await Post.queryById(id);
     await post.updateAllFields(<string>title, <string>timestamp, <string>body, <string>wall);
     return res.redirect(join(req.baseUrl, id));
@@ -114,7 +113,6 @@ posts.post("/delete/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    // TODO: 这里删除一篇post做了两次数据库查询，优化？
     const post = await Post.queryById(id);
     await post.deleteWithComments();
     req.flash("info", "删除成功");

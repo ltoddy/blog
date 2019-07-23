@@ -86,7 +86,6 @@ PostSchema.statics.queryAll = function (): Promise<IPostDocument[]> {
 
 PostSchema.statics.queryWithComments = async function (postId: string): Promise<IPostAndComments> {
   try {
-    // TODO: 优化?
     const post: IPostDocument = await Post.queryById(postId);
     const comments: ICommentDocument[] = await post.comments();
     return Promise.resolve<IPostAndComments>({ post, comments });
@@ -172,9 +171,7 @@ PostSchema.methods.deleteWithComments = function (): Promise<void> {
 
       // 即使没有被连同删除，影响不大
       Comment.deleteMany({ postId: this._id }, (error1: MongoError) => {
-        if (error1) {
-          // TODO: ?
-        }
+        // do nothing
       });
 
       return resolve();

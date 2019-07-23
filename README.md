@@ -77,6 +77,7 @@ blog.example.com:80 {
 - [x] blog迁移与重建
 - [ ] 对部分接口添加Graphql的支持
 - [ ] 更加未来，view层使用React，从mvc转向mvvm，（客户端渲染或服务端渲染）
+- [ ] 站内搜索功能
 
 ## 📝 License
 

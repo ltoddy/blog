@@ -50,7 +50,7 @@ admin.post("/load", signinRequire, async (req: Request, res: Response) => {
 
     const posts: IPostDocument[] = [];
     const comments: ICommentDocument[] = [];
-    for (const postAndComments of postsAndComments) { // TODO: lodash?
+    for (const postAndComments of postsAndComments) {
       posts.push(postAndComments.post);
       comments.push(...postAndComments.comments);
     }

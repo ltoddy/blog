@@ -59,7 +59,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 app.use(access);
 
-app.use(express.static(path.join(__dirname, "../public"), { maxAge: 31557600000 }));
+app.use(express.static(path.join(__dirname, "../public"), { maxAge: 7 * 24 * 60 * 60 }));
 
 // Controllers (route handlers)
 app.use("/", homeRouter);
@@ -68,7 +68,6 @@ app.use("/posts", postsRouter);
 app.use("/comments", commentsRouter);
 app.use("/admin", adminRouter);
 app.use("/api", apiRouter);
-
 // 404 page not found
 app.use((req: Request, res: Response) => {
   if (!res.headersSent) {
