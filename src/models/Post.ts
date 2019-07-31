@@ -1,4 +1,4 @@
-import { Document, model, Model, Schema, Types } from "mongoose";
+import { Document, model, Model, NativeError, Schema, Types } from "mongoose";
 import moment from "moment";
 import { MongoError } from "mongodb";
 import MarkdownIt from "markdown-it";
@@ -74,7 +74,7 @@ PostSchema.statics.queryById = function (id: string): Promise<IPostDocument> {
 PostSchema.statics.queryAll = function (): Promise<IPostDocument[]> {
   // sort
   return new Promise<IPostDocument[]>((resolve, reject) => {
-    Post.find({}, null, { sort: { _id: -1 } }, (error: MongoError, posts: IPostDocument[]) => {
+    Post.find({}).sort({ _id: -1 }).exec((error: NativeError, posts: IPostDocument[]) => {
       if (error) {
         return reject(error);
       }
@@ -120,7 +120,7 @@ PostSchema.statics.paginate = async function (page: number, perPage: number = PO
   const totalPage: number = Math.floor(total / perPage);
 
   return new Promise<IPostPagination>((resolve, reject) => {
-    Post.find({}, null, { limit, skip }, (error: MongoError, posts: IPostDocument[]): void => {
+    Post.find({}).skip(skip).limit(limit).sort({ _id: -1 }).exec((error: NativeError, posts: IPostDocument[]) => {
       if (error) {
         return reject(error);
       }
