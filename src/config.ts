@@ -1,3 +1,5 @@
+import { resolve } from "path";
+
 export const PORT = Number.parseInt(process.env.PORT || "3000");
 
 export const SECRET = process.env.SECRET || "guess a string";
@@ -10,3 +12,5 @@ export const MONGO_DATABASE = process.env.MONGO_DATABASE || "blog";
 export const MONGODB_URI = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`;
 
 export const POSTS_PER_PAGE = Number.parseInt(process.env.POSTS_PER_PAGE || "10");
+
+export const ABOUT_ME_PATH = resolve(__dirname, "..", "about-me.md");

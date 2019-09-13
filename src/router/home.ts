@@ -1,9 +1,13 @@
+import { readFile } from "fs";
+
 import { Request, Response, Router } from "express";
+import MarkdownIt from "markdown-it";
 
 import Post, { IPostPagination } from "../models/Post";
 import loggerFactory from "../utils/logger";
-import { POSTS_PER_PAGE } from "../config";
+import { ABOUT_ME_PATH, POSTS_PER_PAGE } from "../config";
 
+const md = new MarkdownIt();
 const logger = loggerFactory("home.ts");
 // url prefix: "/"
 const home = Router();
@@ -25,7 +29,15 @@ home.get("/", async (req: Request, res: Response) => {
 });
 
 home.get("/about", (req: Request, res: Response) => {
-  return res.render("about");
+  readFile(ABOUT_ME_PATH, (err: NodeJS.ErrnoException, data: Buffer) => {
+    if (err) {
+      return res.render("about", { aboutMe: "正在建设中" });
+    } else {
+      const content = data.toString();
+      const aboutMe = md.render(content);
+      return res.render("about", { aboutMe });
+    }
+  });
 });
 
 home.get("/faq", (req: Request, res: Response) => {
