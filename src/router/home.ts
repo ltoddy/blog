@@ -13,8 +13,7 @@ const logger = loggerFactory("home.ts");
 const home = Router();
 
 home.get("/", async (req: Request, res: Response) => {
-  let { page } = req.query;
-  page = Number.parseInt(page || "0");
+  const page = Number.parseInt(req.query.page as string || "0");
 
   const prevPage = page - 1;
   const nextPage = page + 1;
