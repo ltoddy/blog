@@ -25,18 +25,19 @@
 }
 
 .post-block:nth-child(odd) .other {
-  left: 660px;
+  left: 620px;
   text-align: left;
 }
 
 .post-block:nth-child(even) .other {
-  right: 660px;
+  right: 620px;
   text-align: left;
 }
 
 .one {
+  left: 40px;
   display: inline-block;
-  width: 680px;
+  width: 600px;
   height: 440px;
   overflow: hidden;
   position: relative;
@@ -45,22 +46,22 @@
 
 .wall {
   display: block;
-  height: 440px;
-  width: 680px;
+  height: 400px;
+  width: 600px;
 }
 
 .other {
   position: absolute;
-  top: 20px;
+  top: 10px;
   border: 1px solid #eaeaea;
-  width: 500px;
-  height: 400px;
+  width: 420px;
+  height: 380px;
 }
 
 .post-preview {
   margin: 80px;
   overflow-wrap: break-word;
-  height: 240px;
+  /*height: 240px;*/
   overflow: hidden;
 }
 
@@ -69,7 +70,7 @@
 }
 
 .pagination-container {
-  margin: 50px;
+  margin: 50px 50px 110px;
 }
 
 .pagination {
