@@ -11,7 +11,7 @@ import loggerFactory from "../utils/logger";
 
 const logger = loggerFactory("admin.ts");
 // url prefix: "/admin"
-const admin = Router();
+export const admin = Router();
 
 admin.get("/dump", signinRequire, async (req: Request, res: Response) => {
   try {
@@ -68,5 +68,3 @@ admin.post("/load", signinRequire, async (req: Request, res: Response) => {
     return res.redirect(join(req.baseUrl, "load"));
   }
 });
-
-export default admin;

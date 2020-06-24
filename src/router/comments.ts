@@ -8,7 +8,7 @@ import Comment from "../models/Comment";
 
 const logger = loggerFactory("comment.ts");
 // url prefix: "/comments"
-const comments = Router();
+export const comments = Router();
 
 comments.post("/", async (req: Request, res: Response) => {
   const { postId, author, email, body } = req.fields;
@@ -38,5 +38,3 @@ comments.delete("/:id", (req: Request, res: Response) => {
   const { id } = req.params;
   res.send("删除一条留言" + id);
 });
-
-export default comments;

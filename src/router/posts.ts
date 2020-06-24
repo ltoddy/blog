@@ -10,7 +10,7 @@ import Post from "../models/Post";
 
 const logger = loggerFactory("posts.ts");
 // url prefix: "/posts"
-const posts = Router();
+export const posts = Router();
 
 posts.get("/create", signinRequire, (req: Request, res: Response) => {
   return res.render("posts/create", {});
@@ -124,5 +124,3 @@ posts.post("/delete/:id", async (req: Request, res: Response) => {
     return res.redirect(join(req.baseUrl, "delete", id));
   }
 });
-
-export default posts;

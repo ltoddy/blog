@@ -9,7 +9,7 @@ import { signinRequire, signoutRequire } from "../middlewares/authenticate";
 
 const logger = loggerFactory("auth.ts");
 // url prefix: "/auth"
-const auth = Router();
+export const auth = Router();
 
 auth.get("/signup", signoutRequire, (req: Request, res: Response) => {
   return res.render("auth/signup", {});
@@ -115,5 +115,3 @@ auth.post("/profile", signinRequire, async (req: Request, res: Response) => {
 
   return res.redirect(join(req.baseUrl, "profile"));
 });
-
-export default auth;

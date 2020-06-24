@@ -10,7 +10,7 @@ import { ABOUT_ME_PATH, POSTS_PER_PAGE } from "../config";
 const md = new MarkdownIt();
 const logger = loggerFactory("home.ts");
 // url prefix: "/"
-const home = Router();
+export const home = Router();
 
 home.get("/", async (req: Request, res: Response) => {
   const page = Number.parseInt(req.query.page as string || "0");
@@ -39,8 +39,10 @@ home.get("/about", (req: Request, res: Response) => {
   });
 });
 
+home.get("/timeline", (req: Request, res: Response) => {
+  return res.render("timeline");
+});
+
 home.get("/faq", (req: Request, res: Response) => {
   // TODO
 });
-
-export default home;

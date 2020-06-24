@@ -11,12 +11,13 @@ import flash from "express-flash";
 import mongo from "connect-mongo";
 
 import { MONGODB_URI, PORT, SECRET } from "./config";
-import homeRouter from "./router/home";
-import authRouter from "./router/auth";
-import postsRouter from "./router/posts";
-import commentsRouter from "./router/comments";
-import adminRouter from "./router/admin";
-import apiRouter from "./router/api";
+import { home } from "./router/home";
+import { auth } from "./router/auth";
+import { posts } from "./router/posts";
+import { comments } from "./router/comments";
+import { admin } from "./router/admin";
+import { api } from "./router/api";
+import { health } from "./router/health";
 import access from "./middlewares/access";
 import loggerFactory from "./utils/logger";
 
@@ -63,12 +64,13 @@ app.use(access);
 app.use(express.static(path.join(__dirname, "../public"), { maxAge: 7 * 24 * 60 * 60 }));
 
 // Controllers (route handlers)
-app.use("/", homeRouter);
-app.use("/auth", authRouter);
-app.use("/posts", postsRouter);
-app.use("/comments", commentsRouter);
-app.use("/admin", adminRouter);
-app.use("/api", apiRouter);
+app.use("/", home);
+app.use("/auth", auth);
+app.use("/posts", posts);
+app.use("/comments", comments);
+app.use("/admin", admin);
+app.use("/api", api);
+app.use("/health", health);
 // 404 page not found
 app.use((req: Request, res: Response) => {
   if (!res.headersSent) {
