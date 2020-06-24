@@ -17,13 +17,14 @@ posts.get("/create", signinRequire, (req: Request, res: Response) => {
 });
 
 posts.post("/create", signinRequire, async (req: Request, res: Response) => {
-  const { title, body, wall } = req.fields;
+  const { title, body } = req.fields;
+  const wall = req.fields.wall || "/images/default-post-bg.png";
   const validator = new Validator();
 
   try {
     validator.title(<string>title).done(); // 检查标题
     validator.body(<string>body).done(); // 检查内容
-    validator.absoluteUrl(<string>wall).done(); // 检查壁纸url
+    // validator.absoluteUrl(<string>wall).done(); // 检查壁纸url
   } catch (error) {
     req.flash("error", error.message);
     return res.redirect(join(req.baseUrl, "create"));
