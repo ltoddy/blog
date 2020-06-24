@@ -26,6 +26,7 @@ const MongoStore = mongo(session);
 
 mongoose.connect(MONGODB_URI, {
   poolSize: 25,
+  useNewUrlParser: true,
 })
   .then(() => console.log("ready connect mongodb."))
   .catch(err => {
