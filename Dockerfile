@@ -1,12 +1,12 @@
-FROM node:10.16
+FROM node:12.17.0
 
 WORKDIR /blog
 
 ADD . .
 
-RUN yarn && \
-    yarn build
+RUN npm && \
+    npm build
 
 EXPOSE 3000
 
-CMD ["yarn", "serve"]
+CMD ["npm", "serve"]
