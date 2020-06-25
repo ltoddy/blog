@@ -2,18 +2,18 @@ services:
   - mongodb
 
 environment:
-  nodejs_version: "10"
+  nodejs_version: "12"
 
 install:
   - ps: Install-Product node $env:nodejs_version
-  - yarn
+  - npm
 
 test_script:
   - node --version
-  - yarn --version
-  - yarn lint
-  - yarn test
-  - yarn build
+  - npm --version
+  - npm run lint
+  - npm run test
+  - npm run build
 
 # Don't actually build.
 build: off

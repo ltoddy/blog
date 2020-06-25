@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:12
       - image: circleci/mongo
 
     working_directory: ~/repo
@@ -14,15 +14,15 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
 
-      - run: yarn install
+      - run: npm install
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: yarn lint
+      - run: npm run lint
 
-      - run: yarn test
+      - run: npm run test
 
-      - run: yarn build
+      - run: npm run build
