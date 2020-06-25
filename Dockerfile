@@ -4,8 +4,8 @@ WORKDIR /blog
 
 ADD . .
 
-RUN npm && \
-    npm build
+RUN npm install && \
+    npm run build
 
 EXPOSE 3000
 
