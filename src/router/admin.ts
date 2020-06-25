@@ -5,9 +5,9 @@ import { Request, Response, Router } from "express";
 import { File } from "formidable";
 
 import Post, { IPostAndComments, IPostDocument } from "../models/Post";
-import Comment, { ICommentDocument } from "../models/Comment";
+import { ICommentDocument, Comment } from "../models/Comment";
 import { signinRequire } from "../middlewares/authenticate";
-import loggerFactory from "../utils/logger";
+import { loggerFactory } from "../utils/logger";
 
 const logger = loggerFactory("admin.ts");
 // url prefix: "/admin"

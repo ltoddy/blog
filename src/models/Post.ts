@@ -3,7 +3,7 @@ import moment from "moment";
 import { MongoError } from "mongodb";
 import MarkdownIt from "markdown-it";
 
-import Comment, { ICommentDocument } from "./Comment";
+import { ICommentDocument, Comment } from "./Comment";
 import { POSTS_PER_PAGE } from "../config";
 
 const md = new MarkdownIt();

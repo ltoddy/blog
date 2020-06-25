@@ -90,6 +90,4 @@ export interface IUserModel extends Model<IUserDocument> {
   queryById: (id: string) => Promise<IUserDocument>;
 }
 
-const User: IUserModel = model<IUserDocument, IUserModel>("User", UserSchema);
-
-export default User;
+export const User: IUserModel = model<IUserDocument, IUserModel>("User", UserSchema);

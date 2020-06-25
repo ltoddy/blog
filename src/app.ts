@@ -19,7 +19,7 @@ import { admin } from "./router/admin";
 import { api } from "./router/api";
 import { health } from "./router/health";
 import access from "./middlewares/access";
-import loggerFactory from "./utils/logger";
+import { loggerFactory } from "./utils/logger";
 
 const logger = loggerFactory("app.ts");
 const app = express();

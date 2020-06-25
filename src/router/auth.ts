@@ -2,9 +2,9 @@ import { join } from "path";
 
 import { Request, Response, Router } from "express";
 
-import loggerFactory from "../utils/logger";
+import { loggerFactory } from "../utils/logger";
 import Validator from "../utils/validate";
-import User, { IUserDocument } from "../models/User";
+import { IUserDocument, User } from "../models/User";
 import { signinRequire, signoutRequire } from "../middlewares/authenticate";
 
 const logger = loggerFactory("auth.ts");

@@ -2,7 +2,7 @@ import { join } from "path";
 
 import { Request, Response, Router } from "express";
 
-import loggerFactory from "../utils/logger";
+import { loggerFactory } from "../utils/logger";
 import Validator from "../utils/validate";
 import { signinRequire } from "../middlewares/authenticate";
 import Post from "../models/Post";

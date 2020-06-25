@@ -2,9 +2,9 @@ import { join } from "path";
 
 import { Request, Response, Router } from "express";
 
-import loggerFactory from "../utils/logger";
+import { loggerFactory } from "../utils/logger";
 import Validator from "../utils/validate";
-import Comment from "../models/Comment";
+import { Comment } from "../models/Comment";
 
 const logger = loggerFactory("comment.ts");
 // url prefix: "/comments"

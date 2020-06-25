@@ -88,5 +88,4 @@ export interface ICommentModel extends Model<ICommentDocument> {
   fromJson: (data: ICommentDocument) => Promise<void>;
 }
 
-const Comment: ICommentModel = model<ICommentDocument, ICommentModel>("Comment", CommentSchema);
-export default Comment;
+export const Comment: ICommentModel = model<ICommentDocument, ICommentModel>("Comment", CommentSchema);

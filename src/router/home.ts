@@ -4,7 +4,7 @@ import { Request, Response, Router } from "express";
 import MarkdownIt from "markdown-it";
 
 import Post, { IPostPagination } from "../models/Post";
-import loggerFactory from "../utils/logger";
+import { loggerFactory } from "../utils/logger";
 import { ABOUT_ME_PATH, POSTS_PER_PAGE } from "../config";
 
 const md = new MarkdownIt();

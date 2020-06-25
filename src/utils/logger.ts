@@ -2,7 +2,7 @@ import { createLogger, format, Logger, transports } from "winston";
 
 const { combine, timestamp, printf } = format;
 
-function loggerFactory(filename: string, solitary: boolean = false): Logger {
+export function loggerFactory(filename: string, solitary: boolean = false): Logger {
   const formatter = printf(({ level, message, _, timestamp }) => {
     return `${timestamp} [${filename}] ${level}: ${message}`;
   });
@@ -31,5 +31,3 @@ function loggerFactory(filename: string, solitary: boolean = false): Logger {
     });
   }
 }
-
-export default loggerFactory;
